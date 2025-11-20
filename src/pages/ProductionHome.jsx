@@ -171,7 +171,7 @@ const ProductionHome = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-500 via-blue-600 to-blue-800 text-white py-20 overflow-hidden min-h-[550px] flex items-center">
+      <section className="relative bg-gradient-to-br from-blue-500 via-blue-600 to-blue-800 text-white py-24 overflow-hidden min-h-[600px] flex items-center">
         {/* Animated background circles - positioned like in the image */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {/* Top center white circle */}
