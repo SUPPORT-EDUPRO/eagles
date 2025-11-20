@@ -171,7 +171,7 @@ const ProductionHome = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-500 via-blue-600 to-blue-800 text-white py-24 overflow-hidden min-h-[600px] flex items-center">
+      <section className="relative text-white py-24 overflow-hidden min-h-[600px] flex items-center bg-cover bg-center bg-no-repeat" style={{backgroundImage: "linear-gradient(to bottom right, rgba(59, 130, 246, 0.9), rgba(37, 99, 235, 0.85), rgba(29, 78, 216, 0.9)), url('/gallery/img1.jpg')"}}>
         {/* Animated background circles - positioned like in the image */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {/* Top center white circle */}
@@ -511,8 +511,8 @@ const ProductionHome = () => {
         </div>
       </section>
 
-      {/* EduDash Pro Section */}
-      <section className="py-16 bg-gradient-to-br from-purple-600 via-purple-700 to-pink-600 text-white relative overflow-hidden">
+      {/* Technology & Innovation Section */}
+      <section className="py-16 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white relative overflow-hidden">
         {/* Background circles */}
         <div className="absolute inset-0 overflow-hidden">
           {[...Array(6)].map((_, i) => (
@@ -534,9 +534,9 @@ const ProductionHome = () => {
             <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
               <FaRocket className="text-5xl" />
             </div>
-            <h2 className="text-4xl font-bold mb-4">Powered by EduDash Pro</h2>
+            <h2 className="text-4xl font-bold mb-4">Advanced Learning Technology</h2>
             <p className="text-xl opacity-90 max-w-3xl mx-auto">
-              Experience cutting-edge educational technology with our comprehensive learning management platform. Track progress, communicate with teachers, and access digital learning resources - all in one place.
+              We integrate cutting-edge educational technology to provide comprehensive learning experiences. Track progress, communicate with teachers, and access digital resources seamlessly.
             </p>
           </div>
 
@@ -558,22 +558,13 @@ const ProductionHome = () => {
             </div>
           </div>
 
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+          <div className="text-center">
             <motion.a
-              href="https://edudashpro.org.za"
-              target="_blank"
-              rel="noopener noreferrer"
+              href="/public-registration"
               whileHover={{ scale: 1.05 }}
-              className="bg-white text-purple-600 px-8 py-4 rounded-lg font-bold hover:shadow-xl transition-all inline-block"
+              className="inline-block bg-white text-blue-600 px-10 py-4 rounded-lg font-bold text-lg hover:shadow-xl transition-all"
             >
-              🚀 Visit EduDash Pro
-            </motion.a>
-            <motion.a
-              href="/install-pwa"
-              whileHover={{ scale: 1.05 }}
-              className="bg-yellow-400 text-gray-900 px-8 py-4 rounded-lg font-bold hover:shadow-xl transition-all inline-block"
-            >
-              📱 Install PWA App
+              🚀 Get Started Today
             </motion.a>
           </div>
         </div>
