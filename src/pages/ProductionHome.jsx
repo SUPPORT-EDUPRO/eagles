@@ -175,45 +175,32 @@ const ProductionHome = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-600 via-blue-700 to-blue-900 text-white py-20 overflow-hidden">
-        {/* Background Image Overlay */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-20"
-          style={{
-            backgroundImage: 'url(https://img.freepik.com/free-photo/realistic-scene-with-young-children-with-autism-playing_23-2151241999.jpg)',
-          }}
-        ></div>
-        
-        {/* Blue overlay to maintain brand color */}
-        <div className="absolute inset-0 bg-gradient-to-br from-blue-600/80 via-blue-700/80 to-blue-900/80"></div>
-        
-        {/* Animated background circles */}
+      <section className="relative bg-gradient-to-br from-blue-500 via-blue-600 to-blue-800 text-white py-24 overflow-hidden min-h-[600px] flex items-center">
+        {/* Animated background circles - positioned like in the image */}
         <div className="absolute inset-0 overflow-hidden">
-          {/* Center white bubble */}
-          <div className="absolute top-12 left-1/2 transform -translate-x-1/2 w-16 h-16 bg-white/30 rounded-full"></div>
+          {/* Top center white circle */}
+          <div className="absolute top-20 left-1/2 transform -translate-x-1/2 w-20 h-20 bg-white/30 rounded-full"></div>
           
-          {[...Array(8)].map((_, i) => (
-            <motion.div
-              key={i}
-              className="absolute rounded-full bg-white opacity-10"
-              style={{
-                width: `${100 + i * 50}px`,
-                height: `${100 + i * 50}px`,
-                left: `${Math.random() * 100}%`,
-                top: `${Math.random() * 100}%`,
-              }}
-              animate={{
-                y: [0, -30, 0],
-                x: [0, 30, 0],
-                scale: [1, 1.1, 1],
-              }}
-              transition={{
-                duration: 5 + i,
-                repeat: Infinity,
-                ease: 'easeInOut',
-              }}
-            />
-          ))}
+          {/* Top left area circles */}
+          <div className="absolute top-32 left-[15%] w-24 h-24 bg-white/10 rounded-full"></div>
+          <div className="absolute top-48 left-[8%] w-16 h-16 bg-white/15 rounded-full"></div>
+          
+          {/* Top right area circles */}
+          <div className="absolute top-24 right-[12%] w-32 h-32 bg-white/10 rounded-full"></div>
+          <div className="absolute top-40 right-[20%] w-20 h-20 bg-white/15 rounded-full"></div>
+          
+          {/* Bottom left circles */}
+          <div className="absolute bottom-40 left-[10%] w-28 h-28 bg-white/10 rounded-full"></div>
+          <div className="absolute bottom-24 left-[20%] w-16 h-16 bg-white/15 rounded-full"></div>
+          
+          {/* Bottom right circles */}
+          <div className="absolute bottom-48 right-[8%] w-36 h-36 bg-white/10 rounded-full"></div>
+          <div className="absolute bottom-32 right-[18%] w-20 h-20 bg-white/15 rounded-full"></div>
+          <div className="absolute bottom-16 right-[25%] w-24 h-24 bg-white/10 rounded-full"></div>
+          
+          {/* Additional scattered circles for depth */}
+          <div className="absolute top-[60%] left-[35%] w-16 h-16 bg-white/10 rounded-full"></div>
+          <div className="absolute top-[45%] right-[35%] w-20 h-20 bg-white/10 rounded-full"></div>
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
@@ -221,31 +208,29 @@ const ProductionHome = () => {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="text-center max-w-4xl mx-auto"
+            className="text-center max-w-5xl mx-auto"
           >
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 whitespace-nowrap">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
               Welcome to Young Eagles Day Care
             </h1>
-            <p className="text-xl md:text-2xl mb-8 opacity-90 leading-relaxed">
-              Where learning meets love. We nurture little minds with big dreams<br className="hidden md:block" />
-              through play, care, and creativity with cutting-edge Society 5.0<br className="hidden md:block" />
-              integration.
+            <p className="text-lg md:text-xl lg:text-2xl mb-10 opacity-95 leading-relaxed max-w-4xl mx-auto">
+              Where learning meets love. We nurture little minds with big dreams through play, care, and creativity with cutting-edge Society 5.0 integration.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
               <motion.a
                 href="/public-registration"
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-white text-blue-600 px-8 py-4 rounded-lg font-bold text-lg shadow-lg hover:shadow-xl transition-all"
+                className="bg-white text-blue-600 px-8 py-4 rounded-lg font-bold text-lg shadow-xl hover:shadow-2xl transition-all flex items-center gap-2"
               >
-                Register for 2026 →
+                Register for 2026 <span>→</span>
               </motion.a>
               <motion.button
                 onClick={() => window.location.href = '/programs'}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-blue-500 text-white px-8 py-4 rounded-lg font-bold text-lg border-2 border-white/30 hover:bg-blue-400 transition-all"
+                className="bg-transparent text-white px-8 py-4 rounded-lg font-semibold text-lg border-2 border-white hover:bg-white hover:text-blue-600 transition-all"
               >
                 View Programs
               </motion.button>
@@ -255,129 +240,88 @@ const ProductionHome = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.5 }}
-              className="mt-8 inline-block bg-yellow-400 text-gray-900 px-6 py-3 rounded-full font-bold"
+              className="inline-flex items-center gap-2 bg-yellow-400 text-gray-900 px-6 py-3 rounded-full font-bold shadow-lg"
             >
-              🎉 2026 Enrollment Now Open - Limited Spaces!
+              <span>🎉</span>
+              <span>2026 Enrollment Now Open - Limited Spaces!</span>
             </motion.div>
           </motion.div>
         </div>
 
-        {/* White Wave Separator - single swing toward banner */}
+        {/* White Wave Separator - curved downward like in the image */}
         <div className="absolute bottom-0 left-0 w-full" style={{ lineHeight: 0 }}>
-          <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="w-full h-[100px] block" style={{ display: 'block' }}>
-            <path d="M0,50 Q480,20 960,50 T1440,50 L1440,100 L0,100 Z" fill="white"/>
+          <svg viewBox="0 0 1440 120" preserveAspectRatio="none" className="w-full h-[120px] block">
+            <path d="M0,0 Q360,100 720,80 T1440,0 L1440,120 L0,120 Z" fill="white"/>
           </svg>
         </div>
       </section>
 
       {/* Early Bird Special Banner */}
-      <section className="relative bg-gradient-to-r from-orange-500 via-red-500 to-pink-600 text-white py-6 overflow-hidden">
-        {/* Background Image */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-30"
-          style={{
-            backgroundImage: 'url(https://images.unsplash.com/photo-1587654780291-39c9404d746b?w=1200&auto=format&fit=crop)',
-          }}
-        ></div>
-        
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-orange-500/70 via-red-500/70 to-pink-600/70"></div>
-        
-        {/* Animated background circles */}
-        <div className="absolute inset-0 overflow-hidden">
-          <motion.div
-            className="absolute w-24 h-24 rounded-full bg-orange-400 opacity-30"
-            style={{ left: '5%', top: '20%' }}
-            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.4, 0.3] }}
-            transition={{ duration: 4, repeat: Infinity }}
-          />
-          <motion.div
-            className="absolute w-32 h-32 rounded-full bg-red-400 opacity-20"
-            style={{ right: '8%', top: '10%' }}
-            animate={{ scale: [1, 1.15, 1], opacity: [0.2, 0.3, 0.2] }}
-            transition={{ duration: 5, repeat: Infinity }}
-          />
-          <motion.div
-            className="absolute w-28 h-28 rounded-full bg-pink-400 opacity-25"
-            style={{ left: '15%', bottom: '15%' }}
-            animate={{ scale: [1, 1.1, 1], opacity: [0.25, 0.35, 0.25] }}
-            transition={{ duration: 3.5, repeat: Infinity }}
-          />
-          <motion.div
-            className="absolute w-36 h-36 rounded-full bg-orange-300 opacity-15"
-            style={{ right: '15%', bottom: '10%' }}
-            animate={{ scale: [1, 1.25, 1], opacity: [0.15, 0.25, 0.15] }}
-            transition={{ duration: 6, repeat: Infinity }}
-          />
-        </div>
-
+      <section className="relative bg-gradient-to-r from-orange-500 via-red-500 to-pink-600 text-white py-5 overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
-          <div className="flex flex-col md:flex-row items-start justify-between gap-4">
-            {/* Left: Title and Timers - positioned lower */}
-            <div className="flex items-start gap-6 mt-2">
-              <div className="flex items-center gap-3">
-                <div className="text-3xl">🔥</div>
-                <div>
-                  <h3 className="text-xl md:text-2xl font-bold">Early Bird Special: 50% OFF Registration!</h3>
-                  <p className="text-sm opacity-90">Limited to first 50 families only</p>
-                </div>
+          <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
+            {/* Left: Title and Description */}
+            <div className="flex items-center gap-4">
+              <motion.div
+                animate={{ 
+                  scale: [1, 1.2, 1],
+                }}
+                transition={{ 
+                  duration: 2,
+                  repeat: Infinity 
+                }}
+                className="text-4xl"
+              >
+                🔥
+              </motion.div>
+              <div>
+                <h3 className="text-xl md:text-2xl font-bold leading-tight">Early Bird Special: 50% OFF Registration!</h3>
+                <p className="text-sm opacity-90">Limited to first 50 families only</p>
               </div>
+            </div>
 
-              {/* Timers stacked vertically */}
-              <div className="flex flex-col gap-3">
-                {/* STARTS IN timer */}
-                <div className="flex items-center gap-3">
-                  <span className="text-xs font-semibold whitespace-nowrap">⏰ STARTS IN</span>
-                  <div className="flex gap-2">
-                    <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[50px]">
-                      <div className="text-xl font-bold">{String(startsInTime.hours).padStart(2, '0')}</div>
-                      <div className="text-[10px] uppercase">Hours</div>
-                    </div>
-                    <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[50px]">
-                      <div className="text-xl font-bold">{String(startsInTime.minutes).padStart(2, '0')}</div>
-                      <div className="text-[10px] uppercase">Mins</div>
-                    </div>
-                    <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[50px]">
-                      <div className="text-xl font-bold">{String(startsInTime.seconds).padStart(2, '0')}</div>
-                      <div className="text-[10px] uppercase">Secs</div>
-                    </div>
-                  </div>
+            {/* Center: Timer */}
+            <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 text-white/90">
+                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd"/>
+                </svg>
+                <span className="text-sm font-semibold">Ends in:</span>
+              </div>
+              <div className="flex gap-2">
+                <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[60px]">
+                  <div className="text-2xl font-black leading-none">{String(timeLeft.days).padStart(2, '0')}</div>
+                  <div className="text-[10px] font-bold uppercase mt-1">Days</div>
                 </div>
-
-                {/* ENDS IN timer */}
-                <div className="flex items-center gap-3">
-                  <span className="text-xs font-semibold whitespace-nowrap">🔴 ENDS IN</span>
-                  <div className="flex gap-2">
-                    <div className="bg-white text-red-600 rounded-lg px-3 py-2 text-center min-w-[50px]">
-                      <div className="text-xl font-bold">{String(timeLeft.hours).padStart(2, '0')}</div>
-                      <div className="text-[10px] uppercase">Hours</div>
-                    </div>
-                    <div className="bg-white text-red-600 rounded-lg px-3 py-2 text-center min-w-[50px]">
-                      <div className="text-xl font-bold">{String(timeLeft.minutes).padStart(2, '0')}</div>
-                      <div className="text-[10px] uppercase">Mins</div>
-                    </div>
-                    <div className="bg-white text-red-600 rounded-lg px-3 py-2 text-center min-w-[50px]">
-                      <div className="text-xl font-bold">{String(timeLeft.seconds).padStart(2, '0')}</div>
-                      <div className="text-[10px] uppercase">Secs</div>
-                    </div>
-                  </div>
+                <div className="text-2xl font-bold self-center">:</div>
+                <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[60px]">
+                  <div className="text-2xl font-black leading-none">{String(timeLeft.hours).padStart(2, '0')}</div>
+                  <div className="text-[10px] font-bold uppercase mt-1">Hours</div>
+                </div>
+                <div className="text-2xl font-bold self-center">:</div>
+                <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[60px]">
+                  <div className="text-2xl font-black leading-none">{String(timeLeft.minutes).padStart(2, '0')}</div>
+                  <div className="text-[10px] font-bold uppercase mt-1">Mins</div>
+                </div>
+                <div className="text-2xl font-bold self-center">:</div>
+                <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[60px]">
+                  <div className="text-2xl font-black leading-none">{String(timeLeft.seconds).padStart(2, '0')}</div>
+                  <div className="text-[10px] font-bold uppercase mt-1">Secs</div>
                 </div>
               </div>
             </div>
 
-            {/* Right: CTA Buttons */}
-            <div className="flex gap-3">
-              <a
-                href="http://localhost:3000/registration/young-eagles"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="bg-white text-orange-600 px-6 py-3 rounded-full font-bold text-sm hover:bg-opacity-90 transition-all transform hover:scale-105 shadow-lg whitespace-nowrap"
+            {/* Right: CTA Button */}
+            <div>
+              <motion.a
+                href="/public-registration"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="inline-flex items-center gap-2 bg-white text-orange-600 px-8 py-3 rounded-full font-bold text-base hover:bg-opacity-90 transition-all shadow-lg whitespace-nowrap"
               >
-                ✍️ Register Now!
-              </a>
-              <button className="bg-blue-600 text-white px-6 py-3 rounded-full font-bold text-sm hover:bg-blue-700 transition-all transform hover:scale-105 shadow-lg whitespace-nowrap">
-                ⬇️ Get App
-              </button>
+                <span>Register Now!</span>
+                <span className="text-xl">🚀</span>
+              </motion.a>
             </div>
           </div>
         </div>
