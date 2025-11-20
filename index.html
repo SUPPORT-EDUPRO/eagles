@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    
+    <!-- Primary Meta Tags -->
+    <title>Young Eagles Education Platform - Premium Daycare & Early Learning</title>
+    <meta name="title" content="Young Eagles Education Platform - Premium Daycare & Early Learning" />
+    <meta name="description" content="Award-winning daycare and early learning center featuring Society 5.0 integration, STEM programs, and comprehensive child development for ages 6 months to 6 years." />
+    <meta name="keywords" content="daycare, early learning, child development, STEM education, Society 5.0, preschool, infant care, toddler programs" />
+    <meta name="author" content="Young Eagles Education Platform" />
+    <meta name="robots" content="index, follow" />
+    <meta name="theme-color" content="#2563eb" />
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://youngeagles.edu/" />
+    <meta property="og:title" content="Young Eagles Education Platform - Premium Daycare & Early Learning" />
+    <meta property="og:description" content="Award-winning daycare and early learning center featuring Society 5.0 integration, STEM programs, and comprehensive child development." />
+    <meta property="og:image" content="/app-icons/og-image.png" />
+    <meta property="og:site_name" content="Young Eagles Education Platform" />
+    
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://youngeagles.edu/" />
+    <meta property="twitter:title" content="Young Eagles Education Platform - Premium Daycare & Early Learning" />
+    <meta property="twitter:description" content="Award-winning daycare and early learning center featuring Society 5.0 integration and STEM programs." />
+    <meta property="twitter:image" content="/app-icons/twitter-image.png" />
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/png" href="/app-icons/yehc_logo.png" />
+    <link rel="icon" type="image/x-icon" href="/app-icons/yehc_logo.png" />
+    <link rel="apple-touch-icon" href="/app-icons/apple-touch-icon.png" />
+    
+    <!-- Preload Critical Resources -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://www.googletagmanager.com" />
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com" />
+    
+    <!-- Content Security Policy for production with comprehensive AdSense support -->
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https:; script-src 'self' 'unsafe-inline' 'unsafe-eval' https: data: blob: *.googlesyndication.com *.doubleclick.net *.googleadservices.com *.googletagservices.com *.google.com *.gstatic.com; frame-src 'self' https: data: blob: *.googlesyndication.com *.doubleclick.net *.google.com; img-src 'self' data: https: blob: *.googlesyndication.com *.doubleclick.net *.google.com *.gstatic.com; connect-src 'self' http: https: ws: wss: data: blob: *.googlesyndication.com *.doubleclick.net *.google.com *.gstatic.com https://youngeagles-api-server.up.railway.app; style-src 'self' 'unsafe-inline' https: data: blob:; font-src 'self' https: data: blob:; media-src 'self' https: data: blob:; object-src 'none';" />
+    
+    <!-- Google AdSense Script (Only load in production) -->
+    <script>
+      // Only load AdSense in production
+      if (location.hostname !== 'localhost' && location.hostname !== '127.0.0.1') {
+        const script = document.createElement('script');
+        script.async = true;
+        script.src = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5506438806314781';
+        script.crossOrigin = 'anonymous';
+        document.head.appendChild(script);
+        
+        window.adsbygoogle = window.adsbygoogle || [];
+      }
+    </script>
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'GA_MEASUREMENT_ID');
+    </script>
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "EducationalOrganization",
+      "name": "Young Eagles Education Platform",
+      "alternateName": "Young Eagles Daycare",
+      "url": "https://youngeagles.edu",
+      "logo": "https://youngeagles.edu/app-icons/yehc_logo.png",
+      "description": "Premium daycare and early learning center with Society 5.0 integration",
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "123 Learning Lane",
+        "addressLocality": "Education City",
+        "addressRegion": "EC",
+        "postalCode": "12345",
+        "addressCountry": "US"
+      },
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "telephone": "+1-555-123-4567",
+        "contactType": "customer service",
+        "availableLanguage": "English"
+      },
+      "sameAs": [
+        "https://www.facebook.com/youngeagles",
+        "https://www.instagram.com/youngeagles",
+        "https://www.linkedin.com/company/youngeagles"
+      ]
+    }
+    </script>
+    
+    <!-- Styles -->
+    <link rel="stylesheet" href="/src/index.css" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
