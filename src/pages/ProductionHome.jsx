@@ -55,24 +55,20 @@ const ProductionHome = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // Countdown timer for registration START (Friday 00:00)
+  // Countdown timer for registration START (tomorrow at midnight)
   useEffect(() => {
-    const now = new Date();
-    const nextFriday = new Date(now);
-    const daysUntilFriday = (5 - now.getDay() + 7) % 7;
-    
-    if (daysUntilFriday === 0 && now.getHours() >= 0) {
-      // If it's Friday and past midnight, target next Friday
-      nextFriday.setDate(now.getDate() + 7);
-    } else {
-      nextFriday.setDate(now.getDate() + daysUntilFriday);
-    }
-    
-    nextFriday.setHours(0, 0, 0, 0);
-    
+    const getTomorrowMidnight = () => {
+      const tomorrow = new Date();
+      tomorrow.setDate(tomorrow.getDate() + 1);
+      tomorrow.setHours(0, 0, 0, 0);
+      return tomorrow;
+    };
+
+    const targetDate = getTomorrowMidnight();
+
     const timer = setInterval(() => {
-      const currentTime = new Date().getTime();
-      const distance = nextFriday - currentTime;
+      const now = new Date().getTime();
+      const distance = targetDate - now;
 
       if (distance < 0) {
         clearInterval(timer);
@@ -175,32 +171,34 @@ const ProductionHome = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-br from-blue-500 via-blue-600 to-blue-800 text-white py-24 overflow-hidden min-h-[600px] flex items-center">
+      <section className="relative bg-gradient-to-br from-blue-500 via-blue-600 to-blue-800 text-white py-20 overflow-hidden min-h-[550px] flex items-center">
         {/* Animated background circles - positioned like in the image */}
-        <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {/* Top center white circle */}
           <div className="absolute top-20 left-1/2 transform -translate-x-1/2 w-20 h-20 bg-white/30 rounded-full"></div>
           
           {/* Top left area circles */}
-          <div className="absolute top-32 left-[15%] w-24 h-24 bg-white/10 rounded-full"></div>
-          <div className="absolute top-48 left-[8%] w-16 h-16 bg-white/15 rounded-full"></div>
+          <div className="absolute top-32 left-[15%] w-32 h-32 bg-blue-400/30 rounded-full"></div>
+          <div className="absolute top-48 left-[8%] w-24 h-24 bg-blue-300/20 rounded-full"></div>
           
           {/* Top right area circles */}
-          <div className="absolute top-24 right-[12%] w-32 h-32 bg-white/10 rounded-full"></div>
-          <div className="absolute top-40 right-[20%] w-20 h-20 bg-white/15 rounded-full"></div>
+          <div className="absolute top-24 right-[12%] w-40 h-40 bg-blue-400/25 rounded-full"></div>
+          <div className="absolute top-40 right-[20%] w-28 h-28 bg-blue-300/20 rounded-full"></div>
           
           {/* Bottom left circles */}
-          <div className="absolute bottom-40 left-[10%] w-28 h-28 bg-white/10 rounded-full"></div>
-          <div className="absolute bottom-24 left-[20%] w-16 h-16 bg-white/15 rounded-full"></div>
+          <div className="absolute bottom-32 left-[10%] w-36 h-36 bg-blue-400/30 rounded-full"></div>
+          <div className="absolute bottom-16 left-[20%] w-24 h-24 bg-blue-300/25 rounded-full"></div>
           
-          {/* Bottom right circles */}
-          <div className="absolute bottom-48 right-[8%] w-36 h-36 bg-white/10 rounded-full"></div>
-          <div className="absolute bottom-32 right-[18%] w-20 h-20 bg-white/15 rounded-full"></div>
-          <div className="absolute bottom-16 right-[25%] w-24 h-24 bg-white/10 rounded-full"></div>
+          {/* Bottom right circles - prominent large circles */}
+          <div className="absolute bottom-40 right-[5%] w-48 h-48 bg-blue-400/35 rounded-full"></div>
+          <div className="absolute bottom-24 right-[15%] w-32 h-32 bg-blue-300/25 rounded-full"></div>
+          <div className="absolute bottom-8 right-[25%] w-28 h-28 bg-blue-400/20 rounded-full"></div>
           
           {/* Additional scattered circles for depth */}
-          <div className="absolute top-[60%] left-[35%] w-16 h-16 bg-white/10 rounded-full"></div>
-          <div className="absolute top-[45%] right-[35%] w-20 h-20 bg-white/10 rounded-full"></div>
+          <div className="absolute top-[60%] left-[35%] w-20 h-20 bg-blue-300/15 rounded-full"></div>
+          <div className="absolute top-[45%] right-[35%] w-24 h-24 bg-blue-400/20 rounded-full"></div>
+          <div className="absolute top-[35%] left-[5%] w-20 h-20 bg-blue-300/20 rounded-full"></div>
+          <div className="absolute bottom-[60%] right-[8%] w-32 h-32 bg-blue-400/25 rounded-full"></div>
         </div>
 
         <div className="container mx-auto px-4 relative z-10">
@@ -248,10 +246,10 @@ const ProductionHome = () => {
           </motion.div>
         </div>
 
-        {/* White Wave Separator - curved downward like in the image */}
+        {/* White Wave Separator - double curve matching template */}
         <div className="absolute bottom-0 left-0 w-full" style={{ lineHeight: 0 }}>
-          <svg viewBox="0 0 1440 120" preserveAspectRatio="none" className="w-full h-[120px] block">
-            <path d="M0,0 Q360,100 720,80 T1440,0 L1440,120 L0,120 Z" fill="white"/>
+          <svg viewBox="0 0 1440 100" preserveAspectRatio="none" className="w-full h-[100px] block">
+            <path d="M0,100 C240,10 480,5 720,30 C960,55 1140,70 1440,75 L1440,100 L0,100 Z" fill="white"/>
           </svg>
         </div>
       </section>
@@ -280,33 +278,70 @@ const ProductionHome = () => {
               </div>
             </div>
 
-            {/* Center: Timer */}
-            <div className="flex items-center gap-3">
-              <div className="flex items-center gap-2 text-white/90">
-                <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd"/>
-                </svg>
-                <span className="text-sm font-semibold">Ends in:</span>
+            {/* Center: Timers - Starts In first, then Ends In */}
+            <div className="flex items-center gap-6">
+              {/* STARTS IN Timer */}
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 text-white/90">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd"/>
+                  </svg>
+                  <span className="text-sm font-semibold">Starts in:</span>
+                </div>
+                <div className="flex gap-2">
+                  <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[60px]">
+                    <div className="text-2xl font-black leading-none">{String(startsInTime.days).padStart(2, '0')}</div>
+                    <div className="text-[10px] font-bold uppercase mt-1">Days</div>
+                  </div>
+                  <div className="text-2xl font-bold self-center">:</div>
+                  <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[60px]">
+                    <div className="text-2xl font-black leading-none">{String(startsInTime.hours).padStart(2, '0')}</div>
+                    <div className="text-[10px] font-bold uppercase mt-1">Hours</div>
+                  </div>
+                  <div className="text-2xl font-bold self-center">:</div>
+                  <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[60px]">
+                    <div className="text-2xl font-black leading-none">{String(startsInTime.minutes).padStart(2, '0')}</div>
+                    <div className="text-[10px] font-bold uppercase mt-1">Mins</div>
+                  </div>
+                  <div className="text-2xl font-bold self-center">:</div>
+                  <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[60px]">
+                    <div className="text-2xl font-black leading-none">{String(startsInTime.seconds).padStart(2, '0')}</div>
+                    <div className="text-[10px] font-bold uppercase mt-1">Secs</div>
+                  </div>
+                </div>
               </div>
-              <div className="flex gap-2">
-                <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[60px]">
-                  <div className="text-2xl font-black leading-none">{String(timeLeft.days).padStart(2, '0')}</div>
-                  <div className="text-[10px] font-bold uppercase mt-1">Days</div>
+
+              {/* Vertical Divider */}
+              <div className="h-16 w-px bg-white/30"></div>
+
+              {/* ENDS IN Timer */}
+              <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 text-white/90">
+                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd"/>
+                  </svg>
+                  <span className="text-sm font-semibold">Ends in:</span>
                 </div>
-                <div className="text-2xl font-bold self-center">:</div>
-                <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[60px]">
-                  <div className="text-2xl font-black leading-none">{String(timeLeft.hours).padStart(2, '0')}</div>
-                  <div className="text-[10px] font-bold uppercase mt-1">Hours</div>
-                </div>
-                <div className="text-2xl font-bold self-center">:</div>
-                <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[60px]">
-                  <div className="text-2xl font-black leading-none">{String(timeLeft.minutes).padStart(2, '0')}</div>
-                  <div className="text-[10px] font-bold uppercase mt-1">Mins</div>
-                </div>
-                <div className="text-2xl font-bold self-center">:</div>
-                <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[60px]">
-                  <div className="text-2xl font-black leading-none">{String(timeLeft.seconds).padStart(2, '0')}</div>
-                  <div className="text-[10px] font-bold uppercase mt-1">Secs</div>
+                <div className="flex gap-2">
+                  <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[60px]">
+                    <div className="text-2xl font-black leading-none">{String(timeLeft.days).padStart(2, '0')}</div>
+                    <div className="text-[10px] font-bold uppercase mt-1">Days</div>
+                  </div>
+                  <div className="text-2xl font-bold self-center">:</div>
+                  <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[60px]">
+                    <div className="text-2xl font-black leading-none">{String(timeLeft.hours).padStart(2, '0')}</div>
+                    <div className="text-[10px] font-bold uppercase mt-1">Hours</div>
+                  </div>
+                  <div className="text-2xl font-bold self-center">:</div>
+                  <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[60px]">
+                    <div className="text-2xl font-black leading-none">{String(timeLeft.minutes).padStart(2, '0')}</div>
+                    <div className="text-[10px] font-bold uppercase mt-1">Mins</div>
+                  </div>
+                  <div className="text-2xl font-bold self-center">:</div>
+                  <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[60px]">
+                    <div className="text-2xl font-black leading-none">{String(timeLeft.seconds).padStart(2, '0')}</div>
+                    <div className="text-[10px] font-bold uppercase mt-1">Secs</div>
+                  </div>
                 </div>
               </div>
             </div>
