@@ -18,6 +18,7 @@ import EarlyBirdPromo from '../components/EarlyBirdPromo';
 import { toast } from 'sonner';
 
 const kidsImage = "https://img.freepik.com/free-photo/realistic-scene-with-young-children-with-autism-playing_23-2151241999.jpg";
+const heroBackgroundImage = "/screenshots/bg-image.avif";
 
 const Home = () => {
   useEffect(() => {
@@ -76,25 +77,34 @@ const Home = () => {
       
       <div className="mt-16 bg-gradient-to-br from-pink-50 via-blue-50 to-purple-50 min-h-screen w-full overflow-x-hidden">
         {/* Hero Section */}
-        <section className="relative py-20 px-4">
-          <div className="container mx-auto text-center">
-            <div className="flex flex-col md:flex-row items-center justify-center text-center text-pink-700 font-bold mb-8" data-aos="fade-down">
-              <div data-aos="fade-right" data-aos-delay="200" className="text-xl md:text-5xl">
+        <section 
+          className="relative py-32 px-4 min-h-[80vh] flex items-center bg-cover bg-center bg-no-repeat"
+          style={{
+            backgroundImage: `linear-gradient(to bottom right, rgba(157, 23, 77, 0.7), rgba(88, 28, 135, 0.6), rgba(30, 58, 138, 0.7)), url(${heroBackgroundImage})`,
+            backgroundColor: '#ec4899',
+          }}
+        >
+          {/* Overlay for better text readability */}
+          <div className="absolute inset-0 bg-gradient-to-br from-pink-900/20 via-purple-900/10 to-blue-900/20"></div>
+          
+          <div className="container mx-auto text-center relative z-10">
+            <div className="flex flex-col md:flex-row items-center justify-center text-center text-white font-bold mb-8" data-aos="fade-down">
+              <div data-aos="fade-right" data-aos-delay="200" className="text-xl md:text-6xl drop-shadow-lg">
                 Welcome to
               </div>
-              <div data-aos="fade-down" data-aos-delay="400" className="md:ml-4 text-base md:text-5xl text-pink-800">
+              <div data-aos="fade-down" data-aos-delay="400" className="md:ml-4 text-base md:text-6xl text-yellow-300 drop-shadow-lg">
                 Young Eagles
               </div>
-              <div className="md:ml-4 text-xl md:text-5xl" data-aos="fade-left" data-aos-delay="600">
+              <div className="md:ml-4 text-xl md:text-6xl drop-shadow-lg" data-aos="fade-left" data-aos-delay="600">
                 Day Care
               </div>
             </div>
 
-            <p className="text-xl text-gray-700 max-w-3xl mx-auto mb-8" data-aos="fade-up" data-aos-delay="800">
+            <p className="text-xl md:text-2xl text-white max-w-3xl mx-auto mb-8 drop-shadow-lg" data-aos="fade-up" data-aos-delay="800">
               Where learning meets love. We nurture little minds with big dreams through play, care, and creativity with cutting-edge Society 5.0 integration.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12" data-aos="fade-up" data-aos-delay="1000">
+            <div className="flex flex-col sm:flex-row gap-4 justify-center" data-aos="fade-up" data-aos-delay="1000">
               <a 
                 href="http://localhost:3002/registration/young-eagles" 
                 target="_blank"
@@ -105,21 +115,11 @@ const Home = () => {
               </a>
               <Link 
                 to="/programs" 
-                className="border-2 border-pink-600 hover:bg-pink-600 hover:text-white text-pink-600 px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105"
+                className="border-2 border-white hover:bg-white hover:text-pink-600 text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg"
               >
                 View Programs
               </Link>
             </div>
-          </div>
-
-          {/* Hero Image */}
-          <div className="flex justify-center mb-16" data-aos="zoom-in" data-aos-delay="600">
-            <img
-              src={kidsImage}
-              alt="Happy children playing and learning at Young Eagles Daycare"
-              className="rounded-2xl shadow-2xl max-w-4xl w-full h-auto"
-              loading="eager"
-            />
           </div>
         </section>
 
