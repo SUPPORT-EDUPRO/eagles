@@ -9,6 +9,15 @@ import './index.css'
 const rootElement = document.getElementById('root')
 if (!rootElement) throw new Error('Missing <div id="root"> in index.html')
 
+// Unregister any existing service workers to prevent caching issues
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(registrations => {
+    registrations.forEach(registration => {
+      registration.unregister();
+    });
+  });
+}
+
 createRoot(rootElement).render(
   <StrictMode>
       <App />

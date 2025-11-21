@@ -17,6 +17,17 @@ export default defineConfig({
       '@': path.resolve(__dirname, 'src')
     }
   },
+  build: {
+    rollupOptions: {
+      output: {
+        manualChunks: undefined,
+      }
+    },
+    // Cache busting
+    assetsInlineLimit: 0,
+    // Clear cache on build
+    emptyOutDir: true,
+  },
   server: {
     hmr: {
       port: 5174

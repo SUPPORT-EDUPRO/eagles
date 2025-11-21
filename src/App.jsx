@@ -52,6 +52,38 @@ function App() {
     });
   }, []);
 
+  // Cleanup memory on unmount and page refresh
+  useEffect(() => {
+    const cleanup = () => {
+      // Clear any cached data
+      if ('caches' in window) {
+        caches.keys().then(names => {
+          names.forEach(name => {
+            if (name.includes('workbox') || name.includes('runtime')) {
+              caches.delete(name);
+            }
+          });
+        });
+      }
+      
+      // Clear session storage (but keep localStorage for user preferences)
+      sessionStorage.clear();
+      
+      // Force garbage collection if available (Chrome DevTools only)
+      if (window.gc) {
+        window.gc();
+      }
+    };
+
+    // Cleanup on page unload
+    window.addEventListener('beforeunload', cleanup);
+    
+    return () => {
+      window.removeEventListener('beforeunload', cleanup);
+      cleanup();
+    };
+  }, []);
+
   return (
     <HelmetProvider>
       <Router>
