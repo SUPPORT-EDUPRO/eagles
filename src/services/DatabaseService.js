@@ -9,20 +9,34 @@ class DatabaseService {
   // Register for 2026 intake
   async register2026(data) {
     try {
+      // Split child name into first and last name
+      const nameParts = (data.childName || '').trim().split(' ');
+      const studentFirstName = nameParts[0] || '';
+      const studentLastName = nameParts.slice(1).join(' ') || nameParts[0] || '';
+
+      // Calculate DOB from age (approximate)
+      const currentYear = new Date().getFullYear();
+      const birthYear = currentYear - parseInt(data.childAge || 0);
+      const studentDob = `${birthYear}-01-01`; // Approximate DOB
+
       const { data: result, error } = await this.supabase
-        .from('registrations_2026')
+        .from('registration_requests')
         .insert([{
-          parent_name: data.parentName,
-          parent_email: data.parentEmail,
-          parent_phone: data.parentPhone,
-          child_name: data.childName,
-          child_age: data.childAge,
-          child_gender: data.childGender,
-          preferred_program: data.preferredProgram,
-          additional_notes: data.additionalNotes || '',
-          registration_date: new Date().toISOString(),
+          organization_id: 'bppuzibjlxgfwrujzfsz', // Young Eagles organization ID
+          guardian_name: data.parentName,
+          guardian_email: data.parentEmail,
+          guardian_phone: data.parentPhone,
+          student_first_name: studentFirstName,
+          student_last_name: studentLastName,
+          student_dob: studentDob,
+          student_gender: data.childGender,
+          preferred_class: data.preferredProgram,
+          academic_year: '2026',
           status: 'pending',
-          source: 'website'
+          early_bird: true,
+          special_requests: data.additionalNotes || null,
+          how_did_you_hear: 'website',
+          submission_date: new Date().toISOString()
         }])
         .select()
         .single();
@@ -49,10 +63,10 @@ class DatabaseService {
   async getRegistrationStatus(email) {
     try {
       const { data, error } = await this.supabase
-        .from('registrations_2026')
+        .from('registration_requests')
         .select('*')
-        .eq('parent_email', email)
-        .order('registration_date', { ascending: false })
+        .eq('guardian_email', email)
+        .order('submission_date', { ascending: false })
         .limit(1)
         .single();
 
