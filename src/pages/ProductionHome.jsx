@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
+import { createClient } from '@supabase/supabase-js';
 import { 
   FaGraduationCap, 
   FaUsers, 
@@ -32,6 +33,8 @@ const ProductionHome = () => {
     minutes: 0,
     seconds: 0
   });
+
+  const [liveSpots, setLiveSpots] = useState(null);
 
   // Countdown timer for registration END (Dec 31, 2025)
   useEffect(() => {
@@ -85,6 +88,40 @@ const ProductionHome = () => {
     }, 1000);
 
     return () => clearInterval(timer);
+  }, []);
+
+  // Fetch live spots count from database
+  useEffect(() => {
+    const fetchLiveSpots = async () => {
+      try {
+        const supabase = createClient(
+          import.meta.env.VITE_SUPABASE_URL,
+          import.meta.env.VITE_SUPABASE_ANON_KEY
+        );
+
+        // Query registration_requests for Young Eagles (organization_id)
+        const { count, error } = await supabase
+          .from('registration_requests')
+          .select('*', { count: 'exact', head: true })
+          .eq('organization_id', 'ba79097c-1b93-4b48-bcbe-df73878ab4d1')
+          .eq('campaign_applied', 'WELCOME2026');
+
+        if (error) throw error;
+
+        // Calculate remaining spots (50 total - registered count)
+        const remaining = Math.max(0, 50 - (count || 0));
+        setLiveSpots(remaining);
+      } catch (error) {
+        console.error('Error fetching live spots:', error);
+        setLiveSpots(50); // Fallback to 50 if error
+      }
+    };
+
+    fetchLiveSpots();
+    
+    // Refresh every 30 seconds
+    const interval = setInterval(fetchLiveSpots, 30000);
+    return () => clearInterval(interval);
   }, []);
 
   const stats = [
@@ -283,7 +320,7 @@ const ProductionHome = () => {
             <div className="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2 border border-white/30">
               <div className="flex items-center gap-2">
                 <span className="text-sm font-semibold">🎯 Spots Left:</span>
-                <span className="text-2xl font-black">40</span>
+                <span className="text-2xl font-black">{liveSpots !== null ? liveSpots : '...'}</span>
                 <span className="text-sm">/ 50</span>
               </div>
             </div>
@@ -550,55 +587,39 @@ const ProductionHome = () => {
                 </div>
               </div>
 
-              {/* Download Buttons */}
+              {/* Access App Button */}
               <div className="space-y-4">
-                {/* PWA - Available Now */}
+                {/* Web App - Available Now */}
                 <a
                   href="https://edudashpro.org.za"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 bg-white text-purple-600 hover:bg-gray-100 px-6 py-4 rounded-xl transition-all transform hover:scale-105 shadow-lg"
+                  className="flex items-center gap-4 bg-white text-purple-600 hover:bg-gray-100 px-8 py-5 rounded-2xl transition-all transform hover:scale-105 shadow-2xl group"
                 >
-                  <svg className="w-10 h-10" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
-                  </svg>
+                  <div className="w-14 h-14 bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                    <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
+                      <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                    </svg>
+                  </div>
                   <div className="text-left flex-1">
-                    <div className="text-sm font-semibold text-purple-700">🌐 AVAILABLE NOW</div>
-                    <div className="font-bold text-xl">Launch Web App (PWA)</div>
-                    <div className="text-xs opacity-75">Works on all devices • No installation required</div>
+                    <div className="text-sm font-bold text-purple-700 mb-1">✨ AVAILABLE NOW</div>
+                    <div className="font-black text-2xl text-gray-900 mb-1">Access EduDash Pro</div>
+                    <div className="text-sm text-gray-600">Works on all devices • Android, iOS, Desktop</div>
                   </div>
+                  <svg className="w-6 h-6 text-purple-600 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                  </svg>
                 </a>
-
-                {/* Google Play - Coming Soon */}
-                <div className="flex items-center gap-3 bg-gray-800 opacity-60 px-6 py-4 rounded-xl relative">
-                  <div className="absolute top-2 right-2 bg-yellow-400 text-gray-900 text-xs font-bold px-3 py-1 rounded-full">
-                    COMING SOON
-                  </div>
-                  <svg className="w-10 h-10 text-white" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
-                  </svg>
-                  <div className="text-left text-white">
-                    <div className="text-xs opacity-75">GET IT ON</div>
-                    <div className="font-bold text-lg">Google Play</div>
-                  </div>
-                </div>
-
-                {/* App Store - Coming Soon */}
-                <div className="flex items-center gap-3 bg-gray-800 opacity-60 px-6 py-4 rounded-xl relative">
-                  <div className="absolute top-2 right-2 bg-yellow-400 text-gray-900 text-xs font-bold px-3 py-1 rounded-full">
-                    COMING SOON
-                  </div>
-                  <svg className="w-10 h-10 text-white" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M18.71,19.5C17.88,20.74 17,21.95 15.66,21.97C14.32,22 13.89,21.18 12.37,21.18C10.84,21.18 10.37,21.95 9.1,22C7.79,22.05 6.8,20.68 5.96,19.47C4.25,17 2.94,12.45 4.7,9.39C5.57,7.87 7.13,6.91 8.82,6.88C10.1,6.86 11.32,7.75 12.11,7.75C12.89,7.75 14.37,6.68 15.92,6.84C16.57,6.87 18.39,7.1 19.56,8.82C19.47,8.88 17.39,10.1 17.41,12.63C17.44,15.65 20.06,16.66 20.09,16.67C20.06,16.74 19.67,18.11 18.71,19.5M13,3.5C13.73,2.67 14.94,2.04 15.94,2C16.07,3.17 15.6,4.35 14.9,5.19C14.21,6.04 13.07,6.7 11.95,6.61C11.8,5.46 12.36,4.26 13,3.5Z"/>
-                  </svg>
-                  <div className="text-left text-white">
-                    <div className="text-xs opacity-75">Download on the</div>
-                    <div className="font-bold text-lg">App Store</div>
-                  </div>
-                </div>
               </div>
 
-              <p className="mt-6 text-sm opacity-90">
+              <div className="mt-6 bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
+                <p className="text-sm font-semibold mb-2">📱 Mobile App Installation:</p>
+                <p className="text-sm opacity-90">
+                  After enrolling, you'll receive instructions to install the EduDash Pro app on your phone. Works just like a native app!
+                </p>
+              </div>
+
+              <p className="mt-4 text-sm opacity-90">
                 💜 Join 1,000+ parents already using EduDash Pro • Free forever • No ads
               </p>
             </div>
