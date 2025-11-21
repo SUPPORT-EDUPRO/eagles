@@ -17,6 +17,8 @@ import {
 } from 'react-icons/fa';
 
 const ProductionHome = () => {
+  const edusiteproUrl = import.meta.env.VITE_EDUSITEPRO_URL || 'http://localhost:3002';
+  
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
     hours: 0,
@@ -216,7 +218,7 @@ const ProductionHome = () => {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
               <motion.a
-                href="/public-registration"
+                href={`${edusiteproUrl}/registration/young-eagles`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="bg-white text-blue-600 px-8 py-4 rounded-lg font-bold text-lg shadow-xl hover:shadow-2xl transition-all flex items-center gap-2"
@@ -348,7 +350,7 @@ const ProductionHome = () => {
             {/* Right: CTA Button */}
             <div>
               <motion.a
-                href="/public-registration"
+                href={`${edusiteproUrl}/registration/young-eagles`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 className="inline-flex items-center gap-2 bg-white text-orange-600 px-8 py-3 rounded-full font-bold text-base hover:bg-opacity-90 transition-all shadow-lg whitespace-nowrap"
@@ -501,7 +503,7 @@ const ProductionHome = () => {
             Join hundreds of families who trust Young Eagles for their child's educational journey
           </p>
           <motion.a
-            href="/public-registration"
+            href={`${edusiteproUrl}/registration/young-eagles`}
             whileHover={{ scale: 1.05 }}
             className="inline-block bg-white text-blue-600 px-10 py-4 rounded-lg font-bold text-lg shadow-lg hover:shadow-xl transition-all"
           >
@@ -559,7 +561,7 @@ const ProductionHome = () => {
 
           <div className="text-center">
             <motion.a
-              href="/public-registration"
+              href={`${edusiteproUrl}/registration/young-eagles`}
               whileHover={{ scale: 1.05 }}
               className="inline-block bg-white text-blue-600 px-10 py-4 rounded-lg font-bold text-lg hover:shadow-xl transition-all"
             >
