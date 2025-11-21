@@ -512,6 +512,175 @@ const ProductionHome = () => {
         </div>
       </section>
 
+      {/* EduDash Pro App Marketing Section */}
+      <section className="py-20 bg-gradient-to-br from-purple-600 via-pink-600 to-red-600 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-black/10"></div>
+        
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left: App Info */}
+            <div>
+              <div className="inline-block bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
+                <span className="text-sm font-semibold">📱 FREE PARENT APP</span>
+              </div>
+              
+              <h2 className="text-5xl font-bold mb-6 leading-tight">
+                Stay Connected with<br />
+                <span className="text-yellow-300">EduDash Pro</span>
+              </h2>
+              
+              <p className="text-xl mb-8 opacity-95">
+                Download the official Young Eagles parent app and stay connected with your child's learning journey 24/7. Get real-time updates, track progress, and communicate with teachers instantly.
+              </p>
+
+              <div className="space-y-4 mb-8">
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-2xl">📊</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg mb-1">Real-Time Progress Tracking</h4>
+                    <p className="opacity-90">Monitor your child's development, homework, and daily activities</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-2xl">💬</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg mb-1">Direct Teacher Communication</h4>
+                    <p className="opacity-90">Chat with teachers, get instant notifications, and never miss important updates</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-2xl">🤖</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg mb-1">AI-Powered Homework Help</h4>
+                    <p className="opacity-90">Get instant help with homework using our Dash AI assistant</p>
+                  </div>
+                </div>
+
+                <div className="flex items-start gap-4">
+                  <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-2xl">📸</span>
+                  </div>
+                  <div>
+                    <h4 className="font-bold text-lg mb-1">Photo & Video Sharing</h4>
+                    <p className="opacity-90">See your child's daily moments, activities, and achievements</p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Download Buttons */}
+              <div className="flex flex-wrap gap-4">
+                <a
+                  href="https://play.google.com/store/apps/details?id=com.edudashpro"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 bg-black hover:bg-gray-900 px-6 py-3 rounded-lg transition-all transform hover:scale-105"
+                >
+                  <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
+                  </svg>
+                  <div className="text-left">
+                    <div className="text-xs opacity-75">GET IT ON</div>
+                    <div className="font-bold text-lg">Google Play</div>
+                  </div>
+                </a>
+
+                <a
+                  href="https://apps.apple.com/za/app/edudash-pro/id123456789"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 bg-black hover:bg-gray-900 px-6 py-3 rounded-lg transition-all transform hover:scale-105"
+                >
+                  <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.71,19.5C17.88,20.74 17,21.95 15.66,21.97C14.32,22 13.89,21.18 12.37,21.18C10.84,21.18 10.37,21.95 9.1,22C7.79,22.05 6.8,20.68 5.96,19.47C4.25,17 2.94,12.45 4.7,9.39C5.57,7.87 7.13,6.91 8.82,6.88C10.1,6.86 11.32,7.75 12.11,7.75C12.89,7.75 14.37,6.68 15.92,6.84C16.57,6.87 18.39,7.1 19.56,8.82C19.47,8.88 17.39,10.1 17.41,12.63C17.44,15.65 20.06,16.66 20.09,16.67C20.06,16.74 19.67,18.11 18.71,19.5M13,3.5C13.73,2.67 14.94,2.04 15.94,2C16.07,3.17 15.6,4.35 14.9,5.19C14.21,6.04 13.07,6.7 11.95,6.61C11.8,5.46 12.36,4.26 13,3.5Z"/>
+                  </svg>
+                  <div className="text-left">
+                    <div className="text-xs opacity-75">Download on the</div>
+                    <div className="font-bold text-lg">App Store</div>
+                  </div>
+                </a>
+              </div>
+
+              <p className="mt-6 text-sm opacity-75">
+                ⭐ Rated 4.8/5 by parents • 10,000+ downloads • Available in English & Afrikaans
+              </p>
+            </div>
+
+            {/* Right: App Screenshot Mockup */}
+            <div className="relative">
+              <div className="relative mx-auto max-w-md">
+                {/* Phone Frame */}
+                <div className="relative bg-gray-900 rounded-[3rem] p-3 shadow-2xl transform rotate-6 hover:rotate-0 transition-transform duration-500">
+                  <div className="bg-white rounded-[2.5rem] overflow-hidden">
+                    {/* Status Bar */}
+                    <div className="bg-gradient-to-r from-purple-600 to-pink-600 px-6 py-3 flex justify-between items-center text-white text-xs">
+                      <span>9:41</span>
+                      <div className="flex gap-1">
+                        <span>📶</span>
+                        <span>📱</span>
+                        <span>🔋</span>
+                      </div>
+                    </div>
+                    
+                    {/* App Content */}
+                    <div className="p-6 space-y-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full"></div>
+                        <div>
+                          <h3 className="font-bold text-gray-900">Welcome back, Sarah!</h3>
+                          <p className="text-sm text-gray-600">Emma's Progress Dashboard</p>
+                        </div>
+                      </div>
+
+                      <div className="bg-gradient-to-br from-green-50 to-blue-50 rounded-xl p-4">
+                        <div className="flex justify-between items-start mb-2">
+                          <span className="text-sm font-semibold text-gray-700">Today's Activities</span>
+                          <span className="text-xs bg-green-500 text-white px-2 py-1 rounded">✓ Complete</span>
+                        </div>
+                        <div className="space-y-2">
+                          <div className="flex gap-2 items-center text-sm text-gray-600">
+                            <span className="text-green-500">●</span> Reading Time
+                          </div>
+                          <div className="flex gap-2 items-center text-sm text-gray-600">
+                            <span className="text-green-500">●</span> Art & Craft
+                          </div>
+                          <div className="flex gap-2 items-center text-sm text-gray-600">
+                            <span className="text-yellow-500">●</span> Math Games
+                          </div>
+                        </div>
+                      </div>
+
+                      <div className="bg-purple-50 rounded-xl p-4">
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-2xl">🤖</span>
+                          <span className="font-semibold text-gray-900">Dash AI Assistant</span>
+                        </div>
+                        <p className="text-sm text-gray-600">Ask me anything about homework!</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Floating badges */}
+                <div className="absolute -top-4 -left-4 bg-yellow-400 text-gray-900 px-4 py-2 rounded-full font-bold shadow-lg animate-bounce">
+                  FREE!
+                </div>
+                <div className="absolute -bottom-4 -right-4 bg-white text-purple-600 px-4 py-2 rounded-full font-bold shadow-lg">
+                  AI Powered
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Technology & Innovation Section */}
       <section className="py-16 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white relative overflow-hidden">
         {/* Background circles */}
