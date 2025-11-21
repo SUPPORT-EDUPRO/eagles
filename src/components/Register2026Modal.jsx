@@ -372,6 +372,24 @@ const Register2026Modal = ({ isOpen, onClose }) => {
                       </select>
                     </div>
                     
+                    <div className="bg-green-50 p-4 rounded-lg border border-green-200">
+                      <label className="flex items-start gap-3 cursor-pointer">
+                        <input
+                          type="checkbox"
+                          name="earlyBird"
+                          checked={formData.earlyBird}
+                          onChange={handleInputChange}
+                          className="mt-1"
+                        />
+                        <div>
+                          <span className="font-semibold text-green-800">🎉 Early Bird Registration</span>
+                          <p className="text-sm text-green-700 mt-1">
+                            Register now and get 50% off registration fees! Limited to first 50 families.
+                          </p>
+                        </div>
+                      </label>
+                    </div>
+                    
                     <div>
                       <label className="block text-sm font-medium mb-2">Special Requests / Additional Notes</label>
                       <textarea
