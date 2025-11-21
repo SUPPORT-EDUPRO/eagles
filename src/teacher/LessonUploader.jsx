@@ -1,5 +1,8 @@
+import { useState } from 'react';
+
 const LessonUploader = () => {
-    const [formData, setFormData] = useState({ title: '', description: '', file: null });
+    const [formData] = useState({ title: '', description: '', file: null });
+    const token = localStorage.getItem('authToken'); // Get auth token
   
     const handleSubmit = async () => {
       const data = new FormData();
@@ -23,4 +26,6 @@ const LessonUploader = () => {
       </form>
     );
   };
+  
+export default LessonUploader;
   

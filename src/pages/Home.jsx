@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import { FaStar, FaUsers, FaGraduationCap, FaHeart, FaRocket, FaShieldAlt } from 'react-icons/fa';
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -15,9 +14,6 @@ import AdManager from '../components/AdManager';
 import MarketingCTA from '../components/MarketingCTA';
 import ErrorBoundary from '../components/ErrorBoundary';
 import EarlyBirdPromo from '../components/EarlyBirdPromo';
-import { toast } from 'sonner';
-
-const kidsImage = "https://img.freepik.com/free-photo/realistic-scene-with-young-children-with-autism-playing_23-2151241999.jpg";
 const heroBackgroundImage = "/screenshots/bg-image.avif";
 
 const Home = () => {

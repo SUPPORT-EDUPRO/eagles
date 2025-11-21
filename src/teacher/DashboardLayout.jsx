@@ -17,7 +17,7 @@ const DashboardLayout = ({ children, user, onLogout, onUploadPhoto }) => {
         }`}
       >
         <Sidebar
-          user={parent_id}
+          user={user}
           onLogout={onLogout}
           onUploadPhoto={onUploadPhoto}
           closeSidebar={closeSidebar}

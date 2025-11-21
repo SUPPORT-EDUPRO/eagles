@@ -38,6 +38,7 @@ const AutoLogout = ({ children }) => {
       if (timeoutRef.current) clearTimeout(timeoutRef.current);
       if (warningRef.current) clearTimeout(warningRef.current);
     };
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const stayLoggedIn = () => {

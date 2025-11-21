@@ -1,5 +1,5 @@
 // Email service integration for donation notifications
-// import { supabase } from '../config/supabase';
+import { supabase } from '../lib/supabase';
 
 export const emailService = {
   // Send donation confirmation email using a simpler approach
@@ -90,8 +90,8 @@ export const simpleEmailService = {
         },
         body: JSON.stringify({
           donation,
-          type,
-          resendApiKey: process.env.RESEND_API_KEY // This won't work client-side, needs server endpoint
+          type
+          // resendApiKey handled server-side
         })
       });
 

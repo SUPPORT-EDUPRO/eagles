@@ -12,7 +12,7 @@ class ErrorBoundary extends React.Component {
 
   componentDidCatch(error, errorInfo) {
     // Only log in development to avoid console spam in production
-    if (process.env.NODE_ENV === 'development') {
+    if (import.meta.env.DEV) {
       console.warn('ErrorBoundary caught an error:', error, errorInfo);
     }
   }

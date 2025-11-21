@@ -10,7 +10,9 @@ const TeacherLogin = () => {
   const [password, setPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState("");
+  // eslint-disable-next-line no-unused-vars
   const [success, setSuccess] = useState("");
   const navigate = useNavigate();
   const { login, isTeacher, isAuthenticated } = useAuth();

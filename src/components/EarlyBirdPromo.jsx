@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
 import { FaClock, FaFire } from 'react-icons/fa';
 
 const EarlyBirdPromo = () => {

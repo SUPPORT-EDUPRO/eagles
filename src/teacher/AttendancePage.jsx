@@ -12,9 +12,10 @@ const AttendancePage = () => {
     const [end, setEnd] = useState("");
     const [page, setPage] = useState(1);
     const [hasMore, setHasMore] = useState(false);
-    const [teacherId, setTeacherId] = useState(localStorage.getItem("teacherId"));
+    const [teacherId] = useState(localStorage.getItem("teacherId"));
     
-    const [stats, setStats] = useState({
+    // eslint-disable-next-line no-unused-vars
+    const [stats] = useState({
         present: 0,
         absent: 0,
         late: 0,

@@ -6,7 +6,7 @@ import { Label } from "../components/ui/label";
 import { FaHeart, FaPhone, FaCreditCard, FaUniversity, FaPaypal } from "react-icons/fa";
 import { EducationalBanner } from "../components/Ads/AdManager_Safe";
 import society5Background from "../assets/society-5.0.png";
-// import { donationApi } from "../config/supabase";
+import { donationApi } from "../api/donations";
 import { submitPayFastDonation } from "../api/payfastGenerated";
 import { emailService } from "../services/emailService";
 

@@ -1,12 +1,5 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios';
-
-// Helper to get current weekday index (0=Monday, 4=Friday)
-const getTodayIndex = () => {
-  const jsDay = new Date().getDay(); // 0=Sunday, 1=Monday, ...
-  return jsDay === 0 ? 0 : Math.min(jsDay - 1, 4); // Sunday as Monday, max Friday
-};
 
 const DAYS = [
   {
