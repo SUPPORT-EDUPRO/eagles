@@ -37,9 +37,7 @@ import PhoneLogin from './auth/PhoneLogin';
 import NotificationManager from './components/NotificationManager';
 import AuthTest from './auth/AuthTest';
 import MessagingCenter from './components/Messaging/MessagingCenter';
-import PWAInstallPrompt from './components/PWAInstallPrompt';
 import WhatsAppFloat from './components/WhatsAppFloat';
-import PWAPromotion from './components/PWAPromotion';
 import FloatingElements from './components/FloatingElements';
 import BubbleAnimation from './components/BubbleAnimation';
 import './App.css';
@@ -138,14 +136,8 @@ function App() {
         {/* WhatsApp/Facebook-style Notifications */}
         <NotificationManager />
         
-        {/* PWA Install Prompt */}
-        <PWAInstallPrompt />
-        
         {/* WhatsApp Floating Button */}
         <WhatsAppFloat />
-        
-        {/* PWA Promotion Banner */}
-        <PWAPromotion />
         
       </Router>
     </HelmetProvider>
