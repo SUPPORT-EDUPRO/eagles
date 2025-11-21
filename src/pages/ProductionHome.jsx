@@ -171,7 +171,7 @@ const ProductionHome = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
-      <section className="relative text-white py-24 overflow-hidden min-h-[600px] flex items-center bg-cover bg-center bg-no-repeat" style={{backgroundImage: "linear-gradient(to bottom right, rgba(59, 130, 246, 0.9), rgba(37, 99, 235, 0.85), rgba(29, 78, 216, 0.9)), url('/gallery/img1.jpg')"}}>
+      <section className="relative text-white py-24 overflow-hidden min-h-[600px] flex items-center bg-cover bg-center bg-no-repeat" style={{backgroundImage: "linear-gradient(to bottom right, rgba(59, 130, 246, 0.85), rgba(37, 99, 235, 0.8), rgba(29, 78, 216, 0.85)), url('/screenshots/screenshot1.png')"}}>
         {/* Animated background circles - positioned like in the image */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {/* Top center white circle */}

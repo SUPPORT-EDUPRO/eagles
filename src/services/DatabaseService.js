@@ -1,209 +1,198 @@
-import axios from 'axios';
-
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'https://youngeagles-api-server.up.railway.app';
+import { supabase, handleSupabaseError } from '../config/supabase';
 
 class DatabaseService {
   constructor() {
-    this.api = axios.create({
-      baseURL: API_BASE_URL,
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-
-    // Add request interceptor for authentication
-    this.api.interceptors.request.use(
-      (config) => {
-        const token = localStorage.getItem('authToken');
-        if (token) {
-          config.headers.Authorization = `Bearer ${token}`;
-        }
-        return config;
-      },
-      (error) => Promise.reject(error)
-    );
-
-    // Add response interceptor for error handling
-    this.api.interceptors.response.use(
-      (response) => response,
-      (error) => {
-        // Don't log errors in development mode to reduce console noise
-        if (!import.meta.env.DEV) {
-          console.error('API Error:', error.response?.data || error.message);
-        }
-        
-        // Return a resolved promise with error info instead of rejecting
-        // This prevents unhandled promise rejections
-        return Promise.resolve({
-          error: true,
-          status: error.response?.status || 500,
-          message: error.response?.data?.message || error.message || 'Network error',
-          data: null
-        });
-      }
-    );
+    // Using Supabase instead of Railway/Axios
+    this.supabase = supabase;
   }
 
   // Register for 2026 intake
   async register2026(data) {
     try {
-      const response = await this.api.post('/api/register-2026', {
-        parentName: data.parentName,
-        parentEmail: data.parentEmail,
-        parentPhone: data.parentPhone,
-        childName: data.childName,
-        childAge: data.childAge,
-        childGender: data.childGender,
-        preferredProgram: data.preferredProgram,
-        interestedInPWA: data.interestedInPWA || false,
-        registrationDate: new Date().toISOString(),
-        status: 'pending',
-        source: 'website',
-        additionalNotes: data.additionalNotes || ''
-      });
-      
-      // Check if response indicates an error
-      if (response.error) {
-        return { success: false, error: response.message };
+      const { data: result, error } = await this.supabase
+        .from('registrations_2026')
+        .insert([{
+          parent_name: data.parentName,
+          parent_email: data.parentEmail,
+          parent_phone: data.parentPhone,
+          child_name: data.childName,
+          child_age: data.childAge,
+          child_gender: data.childGender,
+          preferred_program: data.preferredProgram,
+          additional_notes: data.additionalNotes || '',
+          registration_date: new Date().toISOString(),
+          status: 'pending',
+          source: 'website'
+        }])
+        .select()
+        .single();
+
+      if (error) {
+        console.error('Registration error:', error);
+        return { 
+          success: false, 
+          error: error.message || 'Failed to submit registration' 
+        };
       }
-      
-      return { success: true, data: response.data };
+
+      return { success: true, data: result };
     } catch (error) {
-      return { success: false, error: this.handleError(error) };
+      console.error('Registration exception:', error);
+      return { 
+        success: false, 
+        error: error.message || 'An unexpected error occurred' 
+      };
     }
   }
 
   // Get registration status
   async getRegistrationStatus(email) {
     try {
-      const response = await this.api.get(`/api/registration-status/${email}`);
-      
-      if (response.error) {
-        return { success: false, error: response.message };
-      }
-      
-      return { success: true, data: response.data };
-    } catch (error) {
-      return { success: false, error: this.handleError(error) };
-    }
-  }
+      const { data, error } = await this.supabase
+        .from('registrations_2026')
+        .select('*')
+        .eq('parent_email', email)
+        .order('registration_date', { ascending: false })
+        .limit(1)
+        .single();
 
-  // PWA early access signup
-  async signupPWAEarlyAccess(data) {
-    try {
-      const response = await this.api.post('/api/pwa-early-access', {
-        name: data.name,
-        email: data.email,
-        phone: data.phone,
-        deviceType: data.deviceType || 'unknown',
-        notificationPreferences: data.notificationPreferences || [],
-        signupDate: new Date().toISOString(),
-        status: 'active'
-      });
-      return response.data;
+      if (error) {
+        if (error.code === 'PGRST116') {
+          // No rows found
+          return { success: true, data: null };
+        }
+        return { success: false, error: error.message };
+      }
+
+      return { success: true, data };
     } catch (error) {
-      throw this.handleError(error);
+      return { success: false, error: error.message };
     }
   }
 
   // Subscribe to newsletter
   async subscribeNewsletter(email, name = '') {
     try {
-      const response = await this.api.post('/api/newsletter-subscribe', {
-        email,
-        name,
-        subscribeDate: new Date().toISOString(),
-        source: 'website'
-      });
-      return response.data;
+      const { data, error } = await this.supabase
+        .from('newsletter_subscribers')
+        .insert([{
+          email,
+          name,
+          subscribe_date: new Date().toISOString(),
+          source: 'website',
+          status: 'active'
+        }])
+        .select()
+        .single();
+
+      if (error) {
+        return { success: false, error: error.message };
+      }
+
+      return { success: true, data };
     } catch (error) {
-      throw this.handleError(error);
+      return { success: false, error: error.message };
     }
   }
 
   // Contact form submission
   async submitContactForm(data) {
     try {
-      const response = await this.api.post('/api/contact', {
-        name: data.name,
-        email: data.email,
-        phone: data.phone,
-        subject: data.subject,
-        message: data.message,
-        submissionDate: new Date().toISOString(),
-        status: 'new'
-      });
-      return response.data;
+      const { data: result, error } = await this.supabase
+        .from('contact_submissions')
+        .insert([{
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          subject: data.subject,
+          message: data.message,
+          submission_date: new Date().toISOString(),
+          status: 'new'
+        }])
+        .select()
+        .single();
+
+      if (error) {
+        return { success: false, error: error.message };
+      }
+
+      return { success: true, data: result };
     } catch (error) {
-      throw this.handleError(error);
+      return { success: false, error: error.message };
     }
   }
 
   // Get available programs
   async getPrograms() {
     try {
-      const response = await this.api.get('/api/programs');
-      return response.data;
+      const { data, error } = await this.supabase
+        .from('programs')
+        .select('*')
+        .eq('is_active', true)
+        .order('name', { ascending: true });
+
+      if (error) {
+        return { success: false, error: error.message };
+      }
+
+      return { success: true, data };
     } catch (error) {
-      throw this.handleError(error);
+      return { success: false, error: error.message };
     }
   }
 
   // Submit waitlist application
   async submitWaitlist(data) {
     try {
-      const response = await this.api.post('/api/waitlist', {
-        parentName: data.parentName,
-        parentEmail: data.parentEmail,
-        parentPhone: data.parentPhone,
-        childName: data.childName,
-        childAge: data.childAge,
-        preferredStartDate: data.preferredStartDate,
-        preferredProgram: data.preferredProgram,
-        priority: data.priority || 'normal',
-        submissionDate: new Date().toISOString(),
-        status: 'active'
-      });
-      return response.data;
-    } catch (error) {
-      throw this.handleError(error);
-    }
-  }
+      const { data: result, error } = await this.supabase
+        .from('waitlist')
+        .insert([{
+          parent_name: data.parentName,
+          parent_email: data.parentEmail,
+          parent_phone: data.parentPhone,
+          child_name: data.childName,
+          child_age: data.childAge,
+          preferred_start_date: data.preferredStartDate,
+          preferred_program: data.preferredProgram,
+          priority: data.priority || 'normal',
+          submission_date: new Date().toISOString(),
+          status: 'active'
+        }])
+        .select()
+        .single();
 
-  // Error handler
-  handleError(error) {
-    if (error.response) {
-      // Server responded with error status
-      return {
-        success: false,
-        message: error.response.data.message || 'Server error occurred',
-        status: error.response.status,
-        data: error.response.data
-      };
-    } else if (error.request) {
-      // Request made but no response received
-      return {
-        success: false,
-        message: 'Network error. Please check your connection and try again.',
-        status: 0
-      };
-    } else {
-      // Something else happened
-      return {
-        success: false,
-        message: error.message || 'An unexpected error occurred',
-        status: -1
-      };
+      if (error) {
+        return { success: false, error: error.message };
+      }
+
+      return { success: true, data: result };
+    } catch (error) {
+      return { success: false, error: error.message };
     }
   }
 
   // Health check
   async healthCheck() {
     try {
-      const response = await this.api.get('/api/health');
-      return response.data;
+      const { data, error } = await this.supabase
+        .from('registrations_2026')
+        .select('count')
+        .limit(1);
+
+      if (error) {
+        return { success: false, message: 'Database connection failed' };
+      }
+
+      return { 
+        success: true, 
+        message: 'Database connected',
+        timestamp: new Date().toISOString()
+      };
     } catch (error) {
-      throw this.handleError(error);
+      return { 
+        success: false, 
+        message: error.message || 'Health check failed' 
+      };
     }
   }
 }
