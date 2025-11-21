@@ -9,30 +9,25 @@ class DatabaseService {
   // Register for 2026 intake
   async register2026(data) {
     try {
-      // Split child name into first and last name
-      const nameParts = (data.childName || '').trim().split(' ');
-      const studentFirstName = nameParts[0] || '';
-      const studentLastName = nameParts.slice(1).join(' ') || nameParts[0] || '';
-
       const { data: result, error } = await this.supabase
         .from('registration_requests')
         .insert([{
           organization_id: 'bppuzibjlxgfwrujzfsz', // Young Eagles organization ID
-          guardian_name: data.parentName,
-          guardian_email: data.parentEmail,
-          guardian_phone: data.parentPhone,
-          guardian_address: data.parentAddress || null,
-          student_first_name: studentFirstName,
-          student_last_name: studentLastName,
-          student_dob: data.childDOB || null,
-          student_gender: data.childGender || null,
-          preferred_class: data.preferredProgram || null,
+          guardian_name: data.guardianName,
+          guardian_email: data.guardianEmail,
+          guardian_phone: data.guardianPhone,
+          guardian_address: data.guardianAddress || null,
+          student_first_name: data.studentFirstName,
+          student_last_name: data.studentLastName,
+          student_dob: data.studentDOB || null,
+          student_gender: data.studentGender || null,
+          preferred_class: data.preferredClass || null,
           preferred_start_date: data.preferredStartDate || null,
-          how_did_you_hear: data.referralSource || 'website',
-          special_requests: data.additionalNotes || null,
+          how_did_you_hear: data.referralSource || null,
+          special_requests: data.specialRequests || null,
           academic_year: '2026',
           status: 'pending',
-          early_bird: true,
+          early_bird: data.earlyBird || true,
           submission_date: new Date().toISOString()
         }])
         .select()

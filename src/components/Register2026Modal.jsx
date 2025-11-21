@@ -8,17 +8,22 @@ const Register2026Modal = ({ isOpen, onClose }) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState({
-    parentName: '',
-    parentEmail: '',
-    parentPhone: '',
-    parentAddress: '',
-    childName: '',
-    childDOB: '',
-    childGender: '',
-    preferredProgram: '',
+    // Guardian fields
+    guardianName: '',
+    guardianEmail: '',
+    guardianPhone: '',
+    guardianAddress: '',
+    // Student fields
+    studentFirstName: '',
+    studentLastName: '',
+    studentDOB: '',
+    studentGender: '',
+    // Preferences
+    preferredClass: '',
     preferredStartDate: '',
     referralSource: '',
-    additionalNotes: ''
+    earlyBird: true,
+    specialRequests: ''
   });
 
   const programs = [
@@ -73,17 +78,19 @@ const Register2026Modal = ({ isOpen, onClose }) => {
   const resetForm = () => {
     setCurrentStep(1);
     setFormData({
-      parentName: '',
-      parentEmail: '',
-      parentPhone: '',
-      parentAddress: '',
-      childName: '',
-      childDOB: '',
-      childGender: '',
-      preferredProgram: '',
+      guardianName: '',
+      guardianEmail: '',
+      guardianPhone: '',
+      guardianAddress: '',
+      studentFirstName: '',
+      studentLastName: '',
+      studentDOB: '',
+      studentGender: '',
+      preferredClass: '',
       preferredStartDate: '',
       referralSource: '',
-      additionalNotes: ''
+      earlyBird: true,
+      specialRequests: ''
     });
   };
 
@@ -172,11 +179,11 @@ const Register2026Modal = ({ isOpen, onClose }) => {
                     </h3>
                     
                     <div>
-                      <label className="block text-sm font-medium mb-2">Full Name *</label>
+                      <label className="block text-sm font-medium mb-2">Guardian Name *</label>
                       <input
                         type="text"
-                        name="parentName"
-                        value={formData.parentName}
+                        name="guardianName"
+                        value={formData.guardianName}
                         onChange={handleInputChange}
                         required
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
@@ -185,11 +192,11 @@ const Register2026Modal = ({ isOpen, onClose }) => {
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium mb-2">Email Address *</label>
+                      <label className="block text-sm font-medium mb-2">Guardian Email *</label>
                       <input
                         type="email"
-                        name="parentEmail"
-                        value={formData.parentEmail}
+                        name="guardianEmail"
+                        value={formData.guardianEmail}
                         onChange={handleInputChange}
                         required
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
@@ -198,11 +205,11 @@ const Register2026Modal = ({ isOpen, onClose }) => {
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium mb-2">Phone Number *</label>
+                      <label className="block text-sm font-medium mb-2">Guardian Phone *</label>
                       <input
                         type="tel"
-                        name="parentPhone"
-                        value={formData.parentPhone}
+                        name="guardianPhone"
+                        value={formData.guardianPhone}
                         onChange={handleInputChange}
                         required
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
@@ -211,10 +218,10 @@ const Register2026Modal = ({ isOpen, onClose }) => {
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium mb-2">Home Address *</label>
+                      <label className="block text-sm font-medium mb-2">Guardian Address *</label>
                       <textarea
-                        name="parentAddress"
-                        value={formData.parentAddress}
+                        name="guardianAddress"
+                        value={formData.guardianAddress}
                         onChange={handleInputChange}
                         required
                         rows={2}
@@ -236,28 +243,42 @@ const Register2026Modal = ({ isOpen, onClose }) => {
                   >
                     <h3 className="text-xl font-semibold mb-4 flex items-center gap-2">
                       <FaChild className="text-purple-600" />
-                      Child Information
+                      Student Information
                     </h3>
                     
-                    <div>
-                      <label className="block text-sm font-medium mb-2">Child's Full Name *</label>
-                      <input
-                        type="text"
-                        name="childName"
-                        value={formData.childName}
-                        onChange={handleInputChange}
-                        required
-                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                        placeholder="Enter child's full name"
-                      />
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <label className="block text-sm font-medium mb-2">First Name *</label>
+                        <input
+                          type="text"
+                          name="studentFirstName"
+                          value={formData.studentFirstName}
+                          onChange={handleInputChange}
+                          required
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          placeholder="First name"
+                        />
+                      </div>
+                      <div>
+                        <label className="block text-sm font-medium mb-2">Last Name *</label>
+                        <input
+                          type="text"
+                          name="studentLastName"
+                          value={formData.studentLastName}
+                          onChange={handleInputChange}
+                          required
+                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                          placeholder="Last name"
+                        />
+                      </div>
                     </div>
                     
                     <div>
                       <label className="block text-sm font-medium mb-2">Date of Birth *</label>
                       <input
                         type="date"
-                        name="childDOB"
-                        value={formData.childDOB}
+                        name="studentDOB"
+                        value={formData.studentDOB}
                         onChange={handleInputChange}
                         required
                         max="2025-12-31"
@@ -267,18 +288,17 @@ const Register2026Modal = ({ isOpen, onClose }) => {
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium mb-2">Gender *</label>
+                      <label className="block text-sm font-medium mb-2">Gender</label>
                       <select
-                        name="childGender"
-                        value={formData.childGender}
+                        name="studentGender"
+                        value={formData.studentGender}
                         onChange={handleInputChange}
-                        required
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                       >
-                        <option value="">Select gender</option>
+                        <option value="">Prefer not to say</option>
                         <option value="male">Male</option>
                         <option value="female">Female</option>
-                        <option value="other">Prefer not to say</option>
+                        <option value="other">Other</option>
                       </select>
                     </div>
                   </motion.div>
@@ -299,7 +319,7 @@ const Register2026Modal = ({ isOpen, onClose }) => {
                     </h3>
                     
                     <div>
-                      <label className="block text-sm font-medium mb-2">Preferred Program *</label>
+                      <label className="block text-sm font-medium mb-2">Preferred Class *</label>
                       <div className="space-y-2">
                         {programs.map((program) => (
                           <label
@@ -308,9 +328,9 @@ const Register2026Modal = ({ isOpen, onClose }) => {
                           >
                             <input
                               type="radio"
-                              name="preferredProgram"
+                              name="preferredClass"
                               value={program.id}
-                              checked={formData.preferredProgram === program.id}
+                              checked={formData.preferredClass === program.id}
                               onChange={handleInputChange}
                               className="mr-3"
                             />
@@ -347,19 +367,20 @@ const Register2026Modal = ({ isOpen, onClose }) => {
                         <option value="friend">Friend/Family Referral</option>
                         <option value="instagram">Instagram</option>
                         <option value="flyer">Flyer/Poster</option>
+                        <option value="website">Website</option>
                         <option value="other">Other</option>
                       </select>
                     </div>
                     
                     <div>
-                      <label className="block text-sm font-medium mb-2">Additional Notes (Optional)</label>
+                      <label className="block text-sm font-medium mb-2">Special Requests / Additional Notes</label>
                       <textarea
-                        name="additionalNotes"
-                        value={formData.additionalNotes}
+                        name="specialRequests"
+                        value={formData.specialRequests}
                         onChange={handleInputChange}
                         rows={3}
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                        placeholder="Any special requirements or questions..."
+                        placeholder="Any special requirements, allergies, or questions..."
                       />
                     </div>
                   </motion.div>
