@@ -58,7 +58,30 @@ const AdManager = ({ placement = 'content', className = '', style = {} }) => {
 
   return (
     <ErrorBoundary fallbackMessage="Ad content temporarily unavailable">
-      <div className={`ad-container ${className}`} style={style}>
+      <div 
+        className={`ad-container ${className}`} 
+        style={{
+          maxWidth: '728px',
+          margin: '0 auto',
+          padding: '16px',
+          border: '1px solid #e5e7eb',
+          borderRadius: '8px',
+          backgroundColor: '#f9fafb',
+          position: 'relative',
+          overflow: 'hidden',
+          ...style
+        }}
+      >
+        <div style={{ 
+          fontSize: '10px', 
+          color: '#9ca3af', 
+          marginBottom: '8px',
+          textAlign: 'center',
+          textTransform: 'uppercase',
+          letterSpacing: '0.5px'
+        }}>
+          Advertisement
+        </div>
         <ResponsiveAd
           slot={config.slot}
           format={config.format}

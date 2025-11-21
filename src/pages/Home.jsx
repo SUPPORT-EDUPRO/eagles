@@ -121,11 +121,12 @@ const Home = () => {
 
         {/* Ad Banner */}
         <section className="py-8 px-4">
-          <div className="container mx-auto">
+          <div className="container mx-auto max-w-4xl">
             <ErrorBoundary fallbackMessage="Educational banner temporarily unavailable">
               <AdManager 
                 placement="header"
                 className="educational-banner"
+                style={{ maxWidth: '728px' }}
               />
             </ErrorBoundary>
           </div>
@@ -181,19 +182,6 @@ const Home = () => {
           </div>
         </section>
 
-        {/* AdSense Display Ad */}
-        <section className="py-8 px-4">
-          <div className="container mx-auto">
-            <ErrorBoundary fallbackMessage="Advertisement temporarily unavailable">
-              <AdManager 
-                placement="content"
-                className="my-8"
-                style={{ display: 'block', width: '100%', minHeight: '250px' }}
-              />
-            </ErrorBoundary>
-          </div>
-        </section>
-
         {/* Society 5.0 Section */}
         <section className="py-16 px-4 bg-white">
           <div className="container mx-auto">
@@ -231,19 +219,6 @@ const Home = () => {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-
-        {/* Ad Section */}
-        <section className="py-8 px-4 bg-gray-50">
-          <div className="container mx-auto">
-            <ErrorBoundary fallbackMessage="Advertisements temporarily unavailable">
-              <div className="grid md:grid-cols-3 gap-6">
-                <AdManager placement="sidebar" />
-                <AdManager placement="content" />
-                <AdManager placement="footer" />
-              </div>
-            </ErrorBoundary>
           </div>
         </section>
 
