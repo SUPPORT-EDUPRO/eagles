@@ -68,11 +68,6 @@ const Footer = () => (
         </div>
       </div>
 
-      {/* Footer Ad Banner */}
-      <div className="mt-8 mb-4">
-        <AdManager placement="footer" className="flex justify-center" />
-      </div>
-
       {/* Bottom Bar */}
       <div className="border-t border-gray-700 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
         <p className="text-gray-300 text-sm">

@@ -102,7 +102,7 @@ const Home = () => {
 
             <div className="flex flex-col sm:flex-row gap-4 justify-center" data-aos="fade-up" data-aos-delay="1000">
               <a 
-                href="http://localhost:3002/registration/young-eagles" 
+                href="https://edusitepro.edudashpro.org.za/registration/young-eagles" 
                 target="_blank"
                 rel="noopener noreferrer"
                 className="bg-pink-600 hover:bg-pink-700 text-white px-8 py-4 rounded-full font-bold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg text-center"
@@ -461,7 +461,7 @@ const Home = () => {
               </p>
               <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
                 <a
-                  href="http://localhost:3002/registration/young-eagles"
+                  href="https://edusitepro.edudashpro.org.za/registration/young-eagles"
                   target="_blank"
                   rel="noopener noreferrer"
                   className="inline-block px-8 py-4 bg-white text-purple-600 text-lg font-bold rounded-full shadow-md hover:bg-gray-50 transition transform hover:scale-105 duration-300"

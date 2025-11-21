@@ -220,7 +220,7 @@ const EarlyBirdPromo = () => {
             {/* Action Buttons */}
             <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center w-full max-w-3xl">
               <motion.a
-                href={spotsLeft > 0 ? "http://localhost:3002/registration/young-eagles" : "#"}
+                href={spotsLeft > 0 ? "https://edusitepro.edudashpro.org.za/registration/young-eagles" : "#"}
                 target={spotsLeft > 0 ? "_blank" : "_self"}
                 rel="noopener noreferrer"
                 whileHover={{ scale: spotsLeft > 0 ? 1.03 : 1 }}
