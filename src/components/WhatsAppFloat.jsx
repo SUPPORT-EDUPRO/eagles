@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaWhatsapp, FaTimes, FaComment } from 'react-icons/fa';
 
 const WhatsAppFloat = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
   const whatsappNumber = '0815236000';
   const welcomeMessage = "Hi! I'm interested in Young Eagles Education Platform. Can you help me?";
 
@@ -22,7 +23,21 @@ const WhatsAppFloat = () => {
   ];
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <motion.div 
+      drag
+      dragMomentum={false}
+      dragElastic={0.1}
+      dragConstraints={{
+        top: -window.innerHeight + 200,
+        left: -window.innerWidth + 200,
+        right: 0,
+        bottom: 0,
+      }}
+      onDragEnd={(event, info) => {
+        setPosition({ x: info.point.x, y: info.point.y });
+      }}
+      className="fixed bottom-6 right-6 z-50 cursor-move"
+    >
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -129,7 +144,7 @@ const WhatsAppFloat = () => {
           </motion.div>
         )}
       </motion.button>
-    </div>
+    </motion.div>
   );
 };
 

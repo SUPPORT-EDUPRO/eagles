@@ -11,7 +11,7 @@ const links = [
   { to: "/programs", label: "Programs" },
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
-  { to: "https://youngeagles.org.za", label: "Dashboard", external: true },
+  { to: "/gallery", label: "Gallery" },
 ];
 
 const styles = {

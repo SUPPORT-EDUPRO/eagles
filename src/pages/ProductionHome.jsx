@@ -576,49 +576,76 @@ const ProductionHome = () => {
               </div>
 
               {/* Download Buttons */}
-              <div className="flex flex-wrap gap-4">
+              <div className="space-y-4">
+                {/* PWA - Available Now */}
                 <a
-                  href="https://play.google.com/store/apps/details?id=com.edudashpro"
+                  href="https://edudashpro.org.za"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-3 bg-black hover:bg-gray-900 px-6 py-3 rounded-lg transition-all transform hover:scale-105"
+                  className="flex items-center gap-3 bg-white text-purple-600 hover:bg-gray-100 px-6 py-4 rounded-xl transition-all transform hover:scale-105 shadow-lg"
                 >
-                  <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
+                  <svg className="w-10 h-10" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
+                  </svg>
+                  <div className="text-left flex-1">
+                    <div className="text-sm font-semibold text-purple-700">🌐 AVAILABLE NOW</div>
+                    <div className="font-bold text-xl">Launch Web App (PWA)</div>
+                    <div className="text-xs opacity-75">Works on all devices • No installation required</div>
+                  </div>
+                </a>
+
+                {/* Google Play - Coming Soon */}
+                <div className="flex items-center gap-3 bg-gray-800 opacity-60 px-6 py-4 rounded-xl relative">
+                  <div className="absolute top-2 right-2 bg-yellow-400 text-gray-900 text-xs font-bold px-3 py-1 rounded-full">
+                    COMING SOON
+                  </div>
+                  <svg className="w-10 h-10 text-white" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.53,12.9 20.18,13.18L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
                   </svg>
-                  <div className="text-left">
+                  <div className="text-left text-white">
                     <div className="text-xs opacity-75">GET IT ON</div>
                     <div className="font-bold text-lg">Google Play</div>
                   </div>
-                </a>
+                </div>
 
-                <a
-                  href="https://apps.apple.com/za/app/edudash-pro/id123456789"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 bg-black hover:bg-gray-900 px-6 py-3 rounded-lg transition-all transform hover:scale-105"
-                >
-                  <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor">
+                {/* App Store - Coming Soon */}
+                <div className="flex items-center gap-3 bg-gray-800 opacity-60 px-6 py-4 rounded-xl relative">
+                  <div className="absolute top-2 right-2 bg-yellow-400 text-gray-900 text-xs font-bold px-3 py-1 rounded-full">
+                    COMING SOON
+                  </div>
+                  <svg className="w-10 h-10 text-white" viewBox="0 0 24 24" fill="currentColor">
                     <path d="M18.71,19.5C17.88,20.74 17,21.95 15.66,21.97C14.32,22 13.89,21.18 12.37,21.18C10.84,21.18 10.37,21.95 9.1,22C7.79,22.05 6.8,20.68 5.96,19.47C4.25,17 2.94,12.45 4.7,9.39C5.57,7.87 7.13,6.91 8.82,6.88C10.1,6.86 11.32,7.75 12.11,7.75C12.89,7.75 14.37,6.68 15.92,6.84C16.57,6.87 18.39,7.1 19.56,8.82C19.47,8.88 17.39,10.1 17.41,12.63C17.44,15.65 20.06,16.66 20.09,16.67C20.06,16.74 19.67,18.11 18.71,19.5M13,3.5C13.73,2.67 14.94,2.04 15.94,2C16.07,3.17 15.6,4.35 14.9,5.19C14.21,6.04 13.07,6.7 11.95,6.61C11.8,5.46 12.36,4.26 13,3.5Z"/>
                   </svg>
-                  <div className="text-left">
+                  <div className="text-left text-white">
                     <div className="text-xs opacity-75">Download on the</div>
                     <div className="font-bold text-lg">App Store</div>
                   </div>
-                </a>
+                </div>
               </div>
 
-              <p className="mt-6 text-sm opacity-75">
-                ⭐ Rated 4.8/5 by parents • 10,000+ downloads • Available in English & Afrikaans
+              <p className="mt-6 text-sm opacity-90">
+                💜 Join 1,000+ parents already using EduDash Pro • Free forever • No ads
               </p>
             </div>
 
-            {/* Right: App Screenshot Mockup */}
-            <div className="relative">
-              <div className="relative mx-auto max-w-md">
-                {/* Phone Frame */}
-                <div className="relative bg-gray-900 rounded-[3rem] p-3 shadow-2xl transform rotate-6 hover:rotate-0 transition-transform duration-500">
-                  <div className="bg-white rounded-[2.5rem] overflow-hidden">
+            {/* Right: App Screenshot */}
+            <div className="relative flex justify-center lg:justify-start">
+              <div className="relative mx-auto max-w-[280px] sm:max-w-xs lg:max-w-sm">
+                {/* Phone Frame with actual screenshot */}
+                <div className="relative bg-gray-900 rounded-[2.5rem] sm:rounded-[3rem] p-2 sm:p-3 shadow-2xl transform rotate-3 lg:rotate-6 hover:rotate-0 transition-transform duration-500">
+                  <img 
+                    src="/screenshots/edudash-parent-dashboard.png" 
+                    alt="EduDash Pro Parent Dashboard"
+                    className="w-full rounded-[2rem] sm:rounded-[2.5rem] shadow-xl"
+                    onError={(e) => {
+                      // Fallback if image doesn't exist - show the mockup
+                      e.target.style.display = 'none';
+                      e.target.nextElementSibling.style.display = 'block';
+                    }}
+                  />
+                  
+                  {/* Fallback mockup (hidden by default) */}
+                  <div className="hidden bg-white rounded-[2.5rem] overflow-hidden">
                     {/* Status Bar */}
                     <div className="bg-gradient-to-r from-purple-600 to-pink-600 px-6 py-3 flex justify-between items-center text-white text-xs">
                       <span>9:41</span>
@@ -634,43 +661,34 @@ const ProductionHome = () => {
                       <div className="flex items-center gap-3">
                         <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-full"></div>
                         <div>
-                          <h3 className="font-bold text-gray-900">Welcome back, Sarah!</h3>
-                          <p className="text-sm text-gray-600">Emma's Progress Dashboard</p>
+                          <h3 className="font-bold text-gray-900">Welcome back!</h3>
+                          <p className="text-sm text-gray-600">Parent Dashboard</p>
                         </div>
                       </div>
 
                       <div className="bg-gradient-to-br from-green-50 to-blue-50 rounded-xl p-4">
                         <div className="flex justify-between items-start mb-2">
-                          <span className="text-sm font-semibold text-gray-700">Today's Activities</span>
-                          <span className="text-xs bg-green-500 text-white px-2 py-1 rounded">✓ Complete</span>
+                          <span className="text-sm font-semibold text-gray-700">Quick Actions</span>
                         </div>
                         <div className="space-y-2">
                           <div className="flex gap-2 items-center text-sm text-gray-600">
-                            <span className="text-green-500">●</span> Reading Time
+                            <span className="text-green-500">●</span> Messages
                           </div>
                           <div className="flex gap-2 items-center text-sm text-gray-600">
-                            <span className="text-green-500">●</span> Art & Craft
+                            <span className="text-blue-500">●</span> Calendar
                           </div>
                           <div className="flex gap-2 items-center text-sm text-gray-600">
-                            <span className="text-yellow-500">●</span> Math Games
+                            <span className="text-purple-500">●</span> Progress
                           </div>
                         </div>
-                      </div>
-
-                      <div className="bg-purple-50 rounded-xl p-4">
-                        <div className="flex items-center gap-2 mb-2">
-                          <span className="text-2xl">🤖</span>
-                          <span className="font-semibold text-gray-900">Dash AI Assistant</span>
-                        </div>
-                        <p className="text-sm text-gray-600">Ask me anything about homework!</p>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 {/* Floating badges */}
-                <div className="absolute -top-4 -left-4 bg-yellow-400 text-gray-900 px-4 py-2 rounded-full font-bold shadow-lg animate-bounce">
-                  FREE!
+                <div className="absolute -top-4 -left-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-full font-bold shadow-lg">
+                  PWA App
                 </div>
                 <div className="absolute -bottom-4 -right-4 bg-white text-purple-600 px-4 py-2 rounded-full font-bold shadow-lg">
                   AI Powered
@@ -739,59 +757,6 @@ const ProductionHome = () => {
           </div>
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-gray-900 text-white py-12">
-        <div className="container mx-auto px-4">
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Brand */}
-            <div>
-              <h3 className="text-2xl font-bold mb-4">Young Eagles</h3>
-              <p className="text-gray-400 mb-4">Education Platform</p>
-              <p className="text-gray-400">
-                Where learning meets love. We nurture little minds with big dreams through play, care, and creativity with cutting-edge Society 5.0 integration.
-              </p>
-            </div>
-
-            {/* Quick Links */}
-            <div>
-              <h4 className="font-bold text-lg mb-4">Quick Links</h4>
-              <ul className="space-y-2">
-                <li><a href="/" className="text-gray-400 hover:text-white transition-colors">Home</a></li>
-                <li><a href="/programs" className="text-gray-400 hover:text-white transition-colors">Programs</a></li>
-                <li><a href="/about" className="text-gray-400 hover:text-white transition-colors">About Us</a></li>
-                <li><a href="/contact" className="text-gray-400 hover:text-white transition-colors">Contact</a></li>
-              </ul>
-            </div>
-
-            {/* Contact Info */}
-            <div>
-              <h4 className="font-bold text-lg mb-4">Contact Info</h4>
-              <ul className="space-y-3">
-                <li className="flex items-center gap-3">
-                  <FaPhone className="text-blue-400" />
-                  <span className="text-gray-400">081 523 6000</span>
-                </li>
-                <li className="flex items-center gap-3">
-                  <FaEnvelope className="text-blue-400" />
-                  <span className="text-gray-400">info@youngeagles.org.za</span>
-                </li>
-                <li className="flex items-start gap-3">
-                  <FaMapMarkerAlt className="text-blue-400 mt-1" />
-                  <span className="text-gray-400">
-                    7118 Section U Shabangu Street<br />
-                    Mamelodi Pretoria 0122
-                  </span>
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="border-t border-gray-800 mt-8 pt-8 text-center text-gray-400">
-            <p>&copy; 2025 Young Eagles Education Platform. All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
 
       {/* WhatsApp Float Button */}
       <a

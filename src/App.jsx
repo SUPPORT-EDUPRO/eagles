@@ -8,6 +8,9 @@ import PublicRegistration from './pages/PublicRegistration';
 import Programs from './pages/Programs';
 import About from './pages/About';
 import Contact from './pages/Contact';
+import Gallery from './pages/Gallery';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
 import Dashboard from './pages/ParentDashboard/Dashboard';
 import PrivateRoute from './components/PrivateRoute';
 import Login from './auth/Login';
@@ -119,6 +122,9 @@ function App() {
               <Route path="/programs" element={<Programs />} />
               <Route path="/about" element={<About />} />
               <Route path="/contact" element={<Contact />} />
+              <Route path="/gallery" element={<Gallery />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/terms" element={<Terms />} />
             </Route>
 
             {/* Public Routes */}
