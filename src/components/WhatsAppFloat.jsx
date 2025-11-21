@@ -26,17 +26,16 @@ const WhatsAppFloat = () => {
     <motion.div 
       drag
       dragMomentum={false}
-      dragElastic={0.1}
+      dragElastic={0}
       dragConstraints={{
         top: -window.innerHeight + 200,
         left: -window.innerWidth + 200,
         right: 0,
         bottom: 0,
       }}
-      onDragEnd={(event, info) => {
-        setPosition({ x: info.point.x, y: info.point.y });
-      }}
-      className="fixed bottom-6 right-6 z-50 cursor-move"
+      whileDrag={{ scale: 1.1 }}
+      className="fixed bottom-6 right-6 z-50 cursor-move touch-none select-none"
+      style={{ WebkitUserDrag: 'none' }}
     >
       <AnimatePresence>
         {isOpen && (

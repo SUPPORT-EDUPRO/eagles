@@ -256,11 +256,11 @@ const ProductionHome = () => {
       </section>
 
       {/* Early Bird Special Banner */}
-      <section className="relative bg-gradient-to-r from-orange-500 via-red-500 to-pink-600 text-white py-5 overflow-hidden">
+      <section className="relative bg-gradient-to-r from-orange-500 via-red-500 to-pink-600 text-white py-6 overflow-hidden">
         <div className="container mx-auto px-4 relative z-10">
-          <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
-            {/* Left: Title and Description */}
-            <div className="flex items-center gap-4">
+          <div className="flex flex-col items-center gap-4">
+            {/* Title and Description */}
+            <div className="flex items-center gap-3 text-center">
               <motion.div
                 animate={{ 
                   scale: [1, 1.2, 1],
@@ -269,94 +269,69 @@ const ProductionHome = () => {
                   duration: 2,
                   repeat: Infinity 
                 }}
-                className="text-4xl"
+                className="text-3xl md:text-4xl"
               >
                 🔥
               </motion.div>
               <div>
-                <h3 className="text-xl md:text-2xl font-bold leading-tight">Early Bird Special: 50% OFF Registration!</h3>
-                <p className="text-sm opacity-90">Limited to first 50 families only</p>
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold leading-tight">Early Bird Special: 50% OFF Registration!</h3>
+                <p className="text-xs sm:text-sm opacity-90">Limited to first 50 families only</p>
               </div>
             </div>
 
-            {/* Center: Timers - Starts In first, then Ends In */}
-            <div className="flex items-center gap-6">
-              {/* STARTS IN Timer */}
-              <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2 text-white/90">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd"/>
-                  </svg>
-                  <span className="text-sm font-semibold">Starts in:</span>
-                </div>
-                <div className="flex gap-2">
-                  <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[60px]">
-                    <div className="text-2xl font-black leading-none">{String(startsInTime.days).padStart(2, '0')}</div>
-                    <div className="text-[10px] font-bold uppercase mt-1">Days</div>
-                  </div>
-                  <div className="text-2xl font-bold self-center">:</div>
-                  <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[60px]">
-                    <div className="text-2xl font-black leading-none">{String(startsInTime.hours).padStart(2, '0')}</div>
-                    <div className="text-[10px] font-bold uppercase mt-1">Hours</div>
-                  </div>
-                  <div className="text-2xl font-bold self-center">:</div>
-                  <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[60px]">
-                    <div className="text-2xl font-black leading-none">{String(startsInTime.minutes).padStart(2, '0')}</div>
-                    <div className="text-[10px] font-bold uppercase mt-1">Mins</div>
-                  </div>
-                  <div className="text-2xl font-bold self-center">:</div>
-                  <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[60px]">
-                    <div className="text-2xl font-black leading-none">{String(startsInTime.seconds).padStart(2, '0')}</div>
-                    <div className="text-[10px] font-bold uppercase mt-1">Secs</div>
-                  </div>
-                </div>
+            {/* Spots Left Counter */}
+            <div className="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2 border border-white/30">
+              <div className="flex items-center gap-2">
+                <span className="text-sm font-semibold">🎯 Spots Left:</span>
+                <span className="text-2xl font-black">40</span>
+                <span className="text-sm">/ 50</span>
               </div>
+            </div>
 
-              {/* Vertical Divider */}
-              <div className="h-16 w-px bg-white/30"></div>
-
-              {/* ENDS IN Timer */}
-              <div className="flex items-center gap-3">
+            {/* Timers - Responsive Layout */}
+            <div className="w-full flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
+              {/* ENDS IN Timer - Show only this on mobile */}
+              <div className="flex flex-col items-center gap-2 w-full sm:w-auto">
                 <div className="flex items-center gap-2 text-white/90">
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd"/>
                   </svg>
-                  <span className="text-sm font-semibold">Ends in:</span>
+                  <span className="text-xs sm:text-sm font-semibold">Ends in:</span>
                 </div>
-                <div className="flex gap-2">
-                  <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[60px]">
-                    <div className="text-2xl font-black leading-none">{String(timeLeft.days).padStart(2, '0')}</div>
-                    <div className="text-[10px] font-bold uppercase mt-1">Days</div>
+                <div className="flex gap-1 sm:gap-2">
+                  <div className="bg-white text-orange-600 rounded-lg px-2 sm:px-3 py-1 sm:py-2 text-center min-w-[50px] sm:min-w-[60px]">
+                    <div className="text-xl sm:text-2xl font-black leading-none">{String(timeLeft.days).padStart(2, '0')}</div>
+                    <div className="text-[8px] sm:text-[10px] font-bold uppercase mt-0.5 sm:mt-1">DAYS</div>
                   </div>
-                  <div className="text-2xl font-bold self-center">:</div>
-                  <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[60px]">
-                    <div className="text-2xl font-black leading-none">{String(timeLeft.hours).padStart(2, '0')}</div>
-                    <div className="text-[10px] font-bold uppercase mt-1">Hours</div>
+                  <div className="text-xl sm:text-2xl font-bold self-center">:</div>
+                  <div className="bg-white text-orange-600 rounded-lg px-2 sm:px-3 py-1 sm:py-2 text-center min-w-[50px] sm:min-w-[60px]">
+                    <div className="text-xl sm:text-2xl font-black leading-none">{String(timeLeft.hours).padStart(2, '0')}</div>
+                    <div className="text-[8px] sm:text-[10px] font-bold uppercase mt-0.5 sm:mt-1">HRS</div>
                   </div>
-                  <div className="text-2xl font-bold self-center">:</div>
-                  <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[60px]">
-                    <div className="text-2xl font-black leading-none">{String(timeLeft.minutes).padStart(2, '0')}</div>
-                    <div className="text-[10px] font-bold uppercase mt-1">Mins</div>
+                  <div className="text-xl sm:text-2xl font-bold self-center">:</div>
+                  <div className="bg-white text-orange-600 rounded-lg px-2 sm:px-3 py-1 sm:py-2 text-center min-w-[50px] sm:min-w-[60px]">
+                    <div className="text-xl sm:text-2xl font-black leading-none">{String(timeLeft.minutes).padStart(2, '0')}</div>
+                    <div className="text-[8px] sm:text-[10px] font-bold uppercase mt-0.5 sm:mt-1">MINS</div>
                   </div>
-                  <div className="text-2xl font-bold self-center">:</div>
-                  <div className="bg-white text-orange-600 rounded-lg px-3 py-2 text-center min-w-[60px]">
-                    <div className="text-2xl font-black leading-none">{String(timeLeft.seconds).padStart(2, '0')}</div>
-                    <div className="text-[10px] font-bold uppercase mt-1">Secs</div>
+                  <div className="text-xl sm:text-2xl font-bold self-center">:</div>
+                  <div className="bg-white text-orange-600 rounded-lg px-2 sm:px-3 py-1 sm:py-2 text-center min-w-[50px] sm:min-w-[60px]">
+                    <div className="text-xl sm:text-2xl font-black leading-none">{String(timeLeft.seconds).padStart(2, '0')}</div>
+                    <div className="text-[8px] sm:text-[10px] font-bold uppercase mt-0.5 sm:mt-1">SECS</div>
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Right: CTA Button */}
-            <div>
+            {/* CTA Button */}
+            <div className="w-full sm:w-auto">
               <motion.a
                 href={`${edusiteproUrl}/registration/young-eagles`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="inline-flex items-center gap-2 bg-white text-orange-600 px-8 py-3 rounded-full font-bold text-base hover:bg-opacity-90 transition-all shadow-lg whitespace-nowrap"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white text-orange-600 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-bold text-sm sm:text-base hover:bg-opacity-90 transition-all shadow-lg"
               >
                 <span>Register Now!</span>
-                <span className="text-xl">🚀</span>
+                <span className="text-lg sm:text-xl">🚀</span>
               </motion.a>
             </div>
           </div>
