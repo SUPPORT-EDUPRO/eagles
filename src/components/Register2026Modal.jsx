@@ -11,18 +11,22 @@ const Register2026Modal = ({ isOpen, onClose }) => {
     parentName: '',
     parentEmail: '',
     parentPhone: '',
+    parentAddress: '',
     childName: '',
-    childAge: '',
+    childDOB: '',
     childGender: '',
     preferredProgram: '',
+    preferredStartDate: '',
+    referralSource: '',
     additionalNotes: ''
   });
 
   const programs = [
-    { id: 'mini-coders', name: '🤖 Mini Coders & Robo Buddies (Ages 3-5)', ages: '3-5' },
-    { id: 'little-builders', name: '🏗️ Little Builders & Tinkerers (Ages 2-5)', ages: '2-5' },
-    { id: 'creative-cubs', name: '🎨 Creative Cubs Art Studio (Ages 2-5)', ages: '2-5' },
-    { id: 'imagination-station', name: '📚 Imagination Station (Ages 2-5)', ages: '2-5' }
+    { id: 'baby-explorers', name: '👶 Baby Explorers (6 months - 2 years)', ages: '0-2' },
+    { id: 'toddler-time', name: '🧸 Toddler Time (2-3 years)', ages: '2-3' },
+    { id: 'mini-coders', name: '🤖 Mini Coders & Robo Buddies (3-5 years)', ages: '3-5' },
+    { id: 'creative-cubs', name: '🎨 Creative Arts & Expression (2-5 years)', ages: '2-5' },
+    { id: 'little-scientists', name: '🔬 STEM Discovery (3-5 years)', ages: '3-5' }
   ];
 
   const handleInputChange = (e) => {
@@ -72,10 +76,13 @@ const Register2026Modal = ({ isOpen, onClose }) => {
       parentName: '',
       parentEmail: '',
       parentPhone: '',
+      parentAddress: '',
       childName: '',
-      childAge: '',
+      childDOB: '',
       childGender: '',
       preferredProgram: '',
+      preferredStartDate: '',
+      referralSource: '',
       additionalNotes: ''
     });
   };
@@ -202,6 +209,19 @@ const Register2026Modal = ({ isOpen, onClose }) => {
                         placeholder="081 234 5678"
                       />
                     </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Home Address *</label>
+                      <textarea
+                        name="parentAddress"
+                        value={formData.parentAddress}
+                        onChange={handleInputChange}
+                        required
+                        rows={2}
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                        placeholder="Enter your full home address"
+                      />
+                    </div>
                   </motion.div>
                 )}
 
@@ -220,7 +240,7 @@ const Register2026Modal = ({ isOpen, onClose }) => {
                     </h3>
                     
                     <div>
-                      <label className="block text-sm font-medium mb-2">Child's Name *</label>
+                      <label className="block text-sm font-medium mb-2">Child's Full Name *</label>
                       <input
                         type="text"
                         name="childName"
@@ -232,38 +252,34 @@ const Register2026Modal = ({ isOpen, onClose }) => {
                       />
                     </div>
                     
-                    <div className="grid grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium mb-2">Age (in 2026) *</label>
-                        <select
-                          name="childAge"
-                          value={formData.childAge}
-                          onChange={handleInputChange}
-                          required
-                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                        >
-                          <option value="">Select age</option>
-                          <option value="2">2 years</option>
-                          <option value="3">3 years</option>
-                          <option value="4">4 years</option>
-                          <option value="5">5 years</option>
-                        </select>
-                      </div>
-                      
-                      <div>
-                        <label className="block text-sm font-medium mb-2">Gender *</label>
-                        <select
-                          name="childGender"
-                          value={formData.childGender}
-                          onChange={handleInputChange}
-                          required
-                          className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-                        >
-                          <option value="">Select gender</option>
-                          <option value="male">Male</option>
-                          <option value="female">Female</option>
-                        </select>
-                      </div>
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Date of Birth *</label>
+                      <input
+                        type="date"
+                        name="childDOB"
+                        value={formData.childDOB}
+                        onChange={handleInputChange}
+                        required
+                        max="2025-12-31"
+                        min="2019-01-01"
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Gender *</label>
+                      <select
+                        name="childGender"
+                        value={formData.childGender}
+                        onChange={handleInputChange}
+                        required
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      >
+                        <option value="">Select gender</option>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                        <option value="other">Prefer not to say</option>
+                      </select>
                     </div>
                   </motion.div>
                 )}
@@ -302,6 +318,37 @@ const Register2026Modal = ({ isOpen, onClose }) => {
                           </label>
                         ))}
                       </div>
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium mb-2">Preferred Start Date</label>
+                      <input
+                        type="date"
+                        name="preferredStartDate"
+                        value={formData.preferredStartDate}
+                        onChange={handleInputChange}
+                        min="2026-01-01"
+                        max="2026-12-31"
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      />
+                    </div>
+                    
+                    <div>
+                      <label className="block text-sm font-medium mb-2">How did you hear about us?</label>
+                      <select
+                        name="referralSource"
+                        value={formData.referralSource}
+                        onChange={handleInputChange}
+                        className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                      >
+                        <option value="">Select an option</option>
+                        <option value="facebook">Facebook</option>
+                        <option value="google">Google Search</option>
+                        <option value="friend">Friend/Family Referral</option>
+                        <option value="instagram">Instagram</option>
+                        <option value="flyer">Flyer/Poster</option>
+                        <option value="other">Other</option>
+                      </select>
                     </div>
                     
                     <div>

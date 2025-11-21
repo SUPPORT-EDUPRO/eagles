@@ -55,16 +55,15 @@ const ProductionHome = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // Countdown timer for registration START (tomorrow at midnight)
+  // Countdown timer for registration START (today at noon)
   useEffect(() => {
-    const getTomorrowMidnight = () => {
-      const tomorrow = new Date();
-      tomorrow.setDate(tomorrow.getDate() + 1);
-      tomorrow.setHours(0, 0, 0, 0);
-      return tomorrow;
+    const getTodayNoon = () => {
+      const today = new Date();
+      today.setHours(12, 0, 0, 0);
+      return today;
     };
 
-    const targetDate = getTomorrowMidnight();
+    const targetDate = getTodayNoon();
 
     const timer = setInterval(() => {
       const now = new Date().getTime();

@@ -14,11 +14,6 @@ class DatabaseService {
       const studentFirstName = nameParts[0] || '';
       const studentLastName = nameParts.slice(1).join(' ') || nameParts[0] || '';
 
-      // Calculate DOB from age (approximate)
-      const currentYear = new Date().getFullYear();
-      const birthYear = currentYear - parseInt(data.childAge || 0);
-      const studentDob = `${birthYear}-01-01`; // Approximate DOB
-
       const { data: result, error } = await this.supabase
         .from('registration_requests')
         .insert([{
@@ -26,16 +21,18 @@ class DatabaseService {
           guardian_name: data.parentName,
           guardian_email: data.parentEmail,
           guardian_phone: data.parentPhone,
+          guardian_address: data.parentAddress || null,
           student_first_name: studentFirstName,
           student_last_name: studentLastName,
-          student_dob: studentDob,
-          student_gender: data.childGender,
-          preferred_class: data.preferredProgram,
+          student_dob: data.childDOB || null,
+          student_gender: data.childGender || null,
+          preferred_class: data.preferredProgram || null,
+          preferred_start_date: data.preferredStartDate || null,
+          how_did_you_hear: data.referralSource || 'website',
+          special_requests: data.additionalNotes || null,
           academic_year: '2026',
           status: 'pending',
           early_bird: true,
-          special_requests: data.additionalNotes || null,
-          how_did_you_hear: 'website',
           submission_date: new Date().toISOString()
         }])
         .select()
