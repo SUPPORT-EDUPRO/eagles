@@ -6,10 +6,10 @@ import { supabase } from "../../lib/supabase.js";
 import useAuth from "../../hooks/useAuth";
 
 const AdminLogin = () => {
-  // Young Eagles tenant admins should login to their subdomain on EduSitePro
-  // The subdomain ensures proper tenant context in the middleware
+  // Young Eagles tenant admins login at the EduSitePro platform
+  // Middleware will detect their organization from their user profile
   const edusiteproUrl = import.meta.env.PROD 
-    ? 'https://young-eagles.edusitepro.org.za'
+    ? 'https://edusitepro.edudashpro.org.za'
     : (import.meta.env.VITE_EDUSITEPRO_URL || 'http://localhost:3002');
   
   return (
