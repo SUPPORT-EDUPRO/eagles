@@ -6,8 +6,12 @@ import { supabase } from "../../lib/supabase.js";
 import useAuth from "../../hooks/useAuth";
 
 const AdminLogin = () => {
-  // Young Eagles tenant admins should login directly at EduSitePro
-  const edusiteproUrl = import.meta.env.VITE_EDUSITEPRO_URL || 'http://localhost:3002';
+  // Young Eagles tenant admins should login to their organization dashboard
+  // In production, this is the Young Eagles custom domain
+  // In dev, we use localhost with the edusitepro subdomain
+  const edusiteproUrl = import.meta.env.PROD 
+    ? 'https://youngeagles.org.za'
+    : (import.meta.env.VITE_EDUSITEPRO_URL || 'http://localhost:3002');
   
   return (
     <div className="min-h-screen bg-gradient-to-br from-red-50 to-orange-100 text-gray-800 dark:text-white flex items-center justify-center px-4 safe-area-inset">
@@ -29,7 +33,7 @@ const AdminLogin = () => {
         </div>
 
         <a
-          href={`${edusiteproUrl}/login?redirect=/dashboard`}
+          href={`${edusiteproUrl}/dashboard`}
           className="block w-full bg-blue-600 text-white px-4 py-3 rounded-lg hover:bg-blue-700 focus:outline-none text-center font-semibold transition-colors"
         >
           Go to EduSitePro Admin Portal →
