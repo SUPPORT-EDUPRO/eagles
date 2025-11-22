@@ -24,13 +24,11 @@ const WhatsAppFloat = () => {
 
   return (
     <motion.div 
-      drag
+      drag="y"
       dragMomentum={false}
       dragElastic={0}
       dragConstraints={{
-        top: -window.innerHeight + 200,
-        left: -window.innerWidth + 200,
-        right: 0,
+        top: -window.innerHeight + 150,
         bottom: 0,
       }}
       whileDrag={{ scale: 1.1 }}

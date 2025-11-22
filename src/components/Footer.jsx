@@ -77,6 +77,7 @@ const Footer = () => (
           <Link to="/privacy" className="text-gray-300 hover:text-white text-sm transition-colors">Privacy Policy</Link>
           <Link to="/terms" className="text-gray-300 hover:text-white text-sm transition-colors">Terms of Service</Link>
           <Link to="/sitemap" className="text-gray-300 hover:text-white text-sm transition-colors">Sitemap</Link>
+          <Link to="/admin-login" className="text-blue-400 hover:text-blue-300 text-sm transition-colors font-medium">Admin</Link>
         </div>
       </div>
     </div>

@@ -51,7 +51,7 @@ const PrivateRoute = () => {
 
     // Check if the current path requires admin access
     if (requiresAdmin.includes(location.pathname)) {
-        if (userRole === 'admin') {
+        if (userRole === 'admin' || userRole === 'principal_admin' || userRole === 'principal') {
             console.log('PrivateRoute - Admin access granted for', location.pathname);
             return <Outlet />;
         } else {
@@ -68,7 +68,7 @@ const PrivateRoute = () => {
 
     // Check if the current path requires teacher or admin access
     if (requiresTeacherOrAdmin.includes(location.pathname)) {
-        if (userRole === 'teacher' || userRole === 'admin') {
+        if (userRole === 'teacher' || userRole === 'admin' || userRole === 'principal_admin' || userRole === 'principal') {
             console.log('PrivateRoute - Teacher/Admin access granted for', location.pathname);
             return <Outlet />;
         } else {

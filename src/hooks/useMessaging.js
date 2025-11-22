@@ -81,6 +81,12 @@ const useMessaging = () => {
 
   // Fetch unread count
   const fetchUnreadCount = useCallback(async () => {
+    // Disabled: Backend API not available
+    console.log('Unread count fetching disabled - backend API not available');
+    setUnreadCount(0);
+    return;
+    
+    /* Backend API implementation (disabled)
     try {
       const token = localStorage.getItem('accessToken');
       if (!token) {
@@ -98,10 +104,16 @@ const useMessaging = () => {
       console.warn('Failed to fetch unread count:', err.message);
       setUnreadCount(0);
     }
+    */
   }, []);
 
   // Fetch contacts
   const fetchContacts = useCallback(async () => {
+    // Disabled: Backend API not available
+    console.log('Contacts fetching disabled - backend API not available');
+    return;
+    
+    /* Backend API implementation (disabled)
     try {
       const response = await apiRequest(`${API_BASE_URL}/api/messages/contacts`);
       if (response.success) {
@@ -111,10 +123,16 @@ const useMessaging = () => {
       setError(err.message);
       toast.error('Failed to fetch contacts');
     }
+    */
   }, []);
 
   // Fetch notifications
   const fetchNotifications = useCallback(async (page = 1, unreadOnly = false) => {
+    // Disabled: Backend API not available - notifications will come from Supabase real-time
+    console.log('Notification fetching disabled - backend API not available');
+    return;
+    
+    /* Backend API implementation (disabled)
     try {
       const response = await apiRequest(`${API_BASE_URL}/api/messages/notifications?page=${page}&unread_only=${unreadOnly}`);
       if (response.success) {
@@ -124,6 +142,7 @@ const useMessaging = () => {
       setError(err.message);
       toast.error('Failed to fetch notifications');
     }
+    */
   }, []);
 
   // Mark notification as read

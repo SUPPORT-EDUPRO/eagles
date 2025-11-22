@@ -128,36 +128,8 @@ function App() {
             </Route>
 
             {/* Public Routes */}
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/public-registration" element={<PublicRegistration />} />
-            <Route path="/teacher/login" element={<TeacherLogin />} />
-            <Route path="/teacher-login" element={<TeacherLogin />} />
             <Route path="/admin-login" element={<AdminLogin />} />
-            <Route path="/password-reset" element={<PasswordReset />} />
-            <Route path="/passwordless-login" element={<PasswordlessLogin />} />
-            <Route path="/phone-login" element={<PhoneLogin />} />
             <Route path="/auth/action" element={<FirebaseActionHandler />} />
-            <Route path="/auth-test" element={<AuthTest />} />
-
-            {/* Private Routes */}
-            <Route element={<PrivateRoute />}>
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/notifications" element={<Notifications />} />
-              <Route path="/student/homework" element={<HomeworkList />} />
-              <Route path="/submit-work" element={<SubmitWork />} />
-              <Route path="/lessons" element={<Lessons />} />
-              <Route path="/resources" element={<Resources />} />
-              <Route path="/videos" element={<Videos />} />
-              <Route path="/messages" element={<MessagingCenter />} />
-              <Route path="/admin-dashboard" element={<AdminDashboard />} />
-              <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
-              <Route path="/view-attendance" element={<AttendancePage />} />
-              <Route path="/teacher-children-list" element={<TeacherChildrenList />} />
-              <Route path="/homework/upload" element={<UploadHomework />} />
-              <Route path="/register-child" element={<RegisterChild />} />
-              <Route path="/teacher-dashboard/activity-builder" element={<TeacherActivityBuilder />} />
-            </Route>
 
             {/* Catch-all 404 */}
             <Route path="*" element={<div className="p-4 text-center">404 Not Found</div>} />
@@ -174,7 +146,7 @@ function App() {
         {/* WhatsApp/Facebook-style Notifications */}
         <NotificationManager />
         
-        {/* WhatsApp Floating Button */}
+        {/* WhatsApp Floating Button (Draggable) */}
         <WhatsAppFloat />
         
       </Router>

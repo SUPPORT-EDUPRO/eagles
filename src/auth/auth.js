@@ -91,7 +91,8 @@ export async function adminLogin(email, password) {
 
     const decodedToken = parseJwt(token);
 
-    if (decodedToken.role !== "admin") {
+    // Allow both admin and principal roles
+    if (decodedToken.role !== "admin" && decodedToken.role !== "principal") {
       throw new Error("You are not authorized to access this page.");
     }
 
