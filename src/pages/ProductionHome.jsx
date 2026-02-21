@@ -35,10 +35,52 @@ const ProductionHome = () => {
   });
 
   const [liveSpots, setLiveSpots] = useState(null);
+  const [maxSpots, setMaxSpots] = useState(null);
+  const [campaignLoading, setCampaignLoading] = useState(true);
+  const [campaignEndDate, setCampaignEndDate] = useState(null);
+  const [isCampaignExpired, setIsCampaignExpired] = useState(false);
+  const [isCampaignSoldOut, setIsCampaignSoldOut] = useState(false);
+  const [isCampaignActive, setIsCampaignActive] = useState(false);
+  const [campaignLastUpdated, setCampaignLastUpdated] = useState(null);
+  const [selectedParentGoal, setSelectedParentGoal] = useState('school_readiness');
+  const [heroBackgroundIndex, setHeroBackgroundIndex] = useState(0);
+  const [heroParallax, setHeroParallax] = useState({ x: 0, y: 0 });
+  const [selectedTrustSignal, setSelectedTrustSignal] = useState('safety');
 
-  // Countdown timer for registration END (Dec 31, 2025)
+  const heroBackgrounds = [
+    '/screenshots/bg-image.avif',
+    '/campus/campus-1.jpeg'
+  ];
+
+  const trustSignals = [
+    {
+      id: 'safety',
+      label: 'Safety First',
+      title: 'Secure campus with supervised routines',
+      message: 'Controlled access points, visible corridors, and active staff supervision keep children safe throughout the day.'
+    },
+    {
+      id: 'learning',
+      label: 'Future Skills',
+      title: 'Society 5.0 learning for early minds',
+      message: 'Play-based literacy, creativity, and guided technology exposure build confidence for the next stage of school.'
+    },
+    {
+      id: 'communication',
+      label: 'Parent Visibility',
+      title: 'Real-time updates through EduDash Pro',
+      message: 'Families stay informed with progress snapshots, communication tools, and daily learning visibility.'
+    }
+  ];
+
+  // Countdown timer for campaign end
   useEffect(() => {
-    const targetDate = new Date('2025-12-31T23:59:59');
+    if (!campaignEndDate || !isCampaignActive) {
+      setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+      return undefined;
+    }
+
+    const targetDate = new Date(campaignEndDate);
     
     const timer = setInterval(() => {
       const now = new Date().getTime();
@@ -58,7 +100,7 @@ const ProductionHome = () => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [campaignEndDate, isCampaignActive]);
 
   // Countdown timer for registration START (today at noon)
   useEffect(() => {
@@ -90,40 +132,103 @@ const ProductionHome = () => {
     return () => clearInterval(timer);
   }, []);
 
-  // Fetch live spots count from database
+  // Rotate hero backgrounds so we keep both the original and real-campus image
   useEffect(() => {
-    const fetchLiveSpots = async () => {
+    const rotationTimer = setInterval(() => {
+      setHeroBackgroundIndex((prev) => (prev + 1) % heroBackgrounds.length);
+    }, 7000);
+
+    return () => clearInterval(rotationTimer);
+  }, [heroBackgrounds.length]);
+
+  const handleHeroMouseMove = (event) => {
+    const rect = event.currentTarget.getBoundingClientRect();
+    const normalizedX = ((event.clientX - rect.left) / rect.width - 0.5) * 2;
+    const normalizedY = ((event.clientY - rect.top) / rect.height - 0.5) * 2;
+    setHeroParallax({
+      x: normalizedX * 8,
+      y: normalizedY * 6
+    });
+  };
+
+  const handleHeroMouseLeave = () => {
+    setHeroParallax({ x: 0, y: 0 });
+  };
+
+  // Fetch campaign state and live spots from database
+  useEffect(() => {
+    const fetchCampaignStatus = async () => {
+      setCampaignLoading(true);
       try {
         const supabase = createClient(
           import.meta.env.VITE_SUPABASE_URL,
           import.meta.env.VITE_SUPABASE_ANON_KEY
         );
 
-        // Query marketing_campaigns for WELCOME2026 campaign
+        // Query latest active campaign for known registration promo codes
         const { data, error } = await supabase
           .from('marketing_campaigns')
-          .select('current_redemptions, max_redemptions')
-          .eq('coupon_code', 'WELCOME2026')
+          .select('current_redemptions, max_redemptions, active, start_date, end_date, coupon_code, promo_code')
+          .or('coupon_code.eq.WELCOME2026,promo_code.eq.WELCOME2026,coupon_code.eq.2026(FEB),promo_code.eq.2026(FEB)')
           .eq('active', true)
-          .single();
+          .order('created_at', { ascending: false })
+          .limit(1)
+          .maybeSingle();
 
         if (!error && data) {
-          const remaining = data.max_redemptions - data.current_redemptions;
-          setLiveSpots(remaining > 0 ? remaining : 0);
+          const now = Date.now();
+          const startTs = data.start_date ? new Date(data.start_date).getTime() : null;
+          const endTs = data.end_date ? new Date(data.end_date).getTime() : null;
+          const hasMax = data.max_redemptions != null;
+          const remaining = hasMax
+            ? Math.max(0, (data.max_redemptions ?? 0) - (data.current_redemptions ?? 0))
+            : null;
+          const soldOut = hasMax && remaining === 0;
+          const expired = endTs ? endTs < now : false;
+          const notStarted = startTs ? startTs > now : false;
+          const activeNow = Boolean(data.active) && !expired && !soldOut && !notStarted;
+
+          setLiveSpots(remaining);
+          setMaxSpots(data.max_redemptions ?? null);
+          setCampaignEndDate(data.end_date ?? null);
+          setIsCampaignExpired(expired);
+          setIsCampaignSoldOut(soldOut);
+          setIsCampaignActive(activeNow);
         } else if (error) {
-          console.warn('Error fetching live spots (using fallback):', error.message);
-          setLiveSpots(50); // Fallback to 50 if error
+          console.warn('Error fetching campaign status:', error.message);
+          setLiveSpots(null);
+          setMaxSpots(null);
+          setCampaignEndDate(null);
+          setIsCampaignExpired(false);
+          setIsCampaignSoldOut(false);
+          setIsCampaignActive(false);
+        } else {
+          // No campaign configured
+          setLiveSpots(null);
+          setMaxSpots(null);
+          setCampaignEndDate(null);
+          setIsCampaignExpired(false);
+          setIsCampaignSoldOut(false);
+          setIsCampaignActive(false);
         }
       } catch (error) {
-        console.warn('Error fetching live spots (using fallback):', error);
-        setLiveSpots(50); // Fallback to 50 if error
+        console.warn('Error fetching campaign status:', error);
+        setLiveSpots(null);
+        setMaxSpots(null);
+        setCampaignEndDate(null);
+        setIsCampaignExpired(false);
+        setIsCampaignSoldOut(false);
+        setIsCampaignActive(false);
+      } finally {
+        setCampaignLoading(false);
+        setCampaignLastUpdated(new Date());
       }
     };
 
-    fetchLiveSpots();
+    fetchCampaignStatus();
     
     // Refresh every 30 seconds
-    const interval = setInterval(fetchLiveSpots, 30000);
+    const interval = setInterval(fetchCampaignStatus, 30000);
     return () => clearInterval(interval);
   }, []);
 
@@ -209,10 +314,69 @@ const ProductionHome = () => {
     }
   ];
 
+  const parentGoals = [
+    {
+      id: 'school_readiness',
+      label: 'School readiness',
+      title: 'Build confidence for Grade R and beyond',
+      message: 'Our structured play and pre-literacy support helps children arrive confident, independent, and excited to learn.'
+    },
+    {
+      id: 'safe_care',
+      label: 'Safe, loving care',
+      title: 'A safe environment with trusted caregivers',
+      message: 'Daily routines, attentive staff, and clear parent communication create peace of mind while your child thrives.'
+    },
+    {
+      id: 'future_skills',
+      label: 'Future skills',
+      title: 'Early exposure to Society 5.0 learning',
+      message: 'Creative technology and guided discovery build the curiosity, collaboration, and problem-solving skills children need next.'
+    }
+  ];
+
+  const campaignState = isCampaignActive
+    ? 'active'
+    : isCampaignSoldOut
+      ? 'sold_out'
+      : isCampaignExpired
+        ? 'expired'
+        : 'inactive';
+
+  const promoBannerClass = campaignState === 'active'
+    ? 'from-orange-500 via-red-500 to-pink-600'
+    : 'from-slate-700 via-slate-800 to-slate-900';
+
+  const promoTitle = campaignState === 'active'
+    ? 'Early Bird Special: 50% OFF Registration!'
+    : campaignState === 'sold_out'
+      ? 'Early Bird Campaign Sold Out'
+      : campaignState === 'expired'
+        ? 'Early Bird Campaign Ended'
+        : 'Enrollment Update';
+
+  const promoSubtitle = campaignState === 'active'
+    ? 'Limited to first 50 families only'
+    : 'Registration is still open. Contact admissions for the latest fee options.';
+
+  const activeGoal = parentGoals.find((goal) => goal.id === selectedParentGoal) || parentGoals[0];
+  const spotsProgress = maxSpots && liveSpots !== null
+    ? Math.max(0, Math.min(100, Math.round((liveSpots / maxSpots) * 100)))
+    : null;
+  const lastUpdatedText = campaignLastUpdated
+    ? campaignLastUpdated.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
+    : null;
+  const activeTrustSignal = trustSignals.find((signal) => signal.id === selectedTrustSignal) || trustSignals[0];
+
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-slate-50">
       {/* Hero Section */}
-      <section className="relative text-white py-24 overflow-hidden min-h-[600px] flex items-center bg-cover bg-center bg-no-repeat" style={{backgroundImage: "linear-gradient(to bottom right, rgba(59, 130, 246, 0.85), rgba(37, 99, 235, 0.8), rgba(29, 78, 216, 0.85)), url('/screenshots/bg-image.avif')"}}>
+      <section
+        className="relative text-white py-16 md:py-24 overflow-hidden min-h-[560px] md:min-h-[600px] flex items-center bg-cover bg-center bg-no-repeat transition-all duration-1000"
+        style={{ backgroundImage: `linear-gradient(to bottom right, rgba(59, 130, 246, 0.8), rgba(37, 99, 235, 0.75), rgba(29, 78, 216, 0.8)), url('${heroBackgrounds[heroBackgroundIndex]}')` }}
+        onMouseMove={handleHeroMouseMove}
+        onMouseLeave={handleHeroMouseLeave}
+      >
         {/* Animated background circles - positioned like in the image */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none">
           {/* Top center white circle */}
@@ -241,49 +405,76 @@ const ProductionHome = () => {
           <div className="absolute top-[35%] left-[5%] w-20 h-20 bg-blue-300/20 rounded-full"></div>
           <div className="absolute bottom-[60%] right-[8%] w-32 h-32 bg-blue-400/25 rounded-full"></div>
         </div>
+        <motion.div
+          className="absolute inset-0 pointer-events-none"
+          animate={{ x: heroParallax.x * -0.35, y: heroParallax.y * -0.35 }}
+          transition={{ type: 'spring', stiffness: 60, damping: 14 }}
+        >
+          <div className="absolute -top-24 -left-24 h-72 w-72 rounded-full bg-white/15 blur-3xl" />
+          <div className="absolute -bottom-24 -right-24 h-80 w-80 rounded-full bg-blue-300/20 blur-3xl" />
+        </motion.div>
 
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+            animate={{ opacity: 1, y: 0, x: heroParallax.x * 0.25, scale: 1.0 }}
             transition={{ duration: 0.8 }}
             className="text-center max-w-5xl mx-auto"
           >
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 leading-tight">
-              Welcome to Young Eagles Day Care
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/15 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-blue-100 backdrop-blur-sm">
+              <span>Admissions</span>
+              <span className="h-1 w-1 rounded-full bg-white/70" />
+              <span>{campaignState === 'active' ? 'Promo live now' : 'Open for 2026 intake'}</span>
+            </div>
+
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-5 leading-tight">
+              Welcome to <span className="text-blue-100">Young Eagles Day Care</span>
             </h1>
-            <p className="text-lg md:text-xl lg:text-2xl mb-10 opacity-95 leading-relaxed max-w-4xl mx-auto">
-              Where learning meets love. We nurture little minds with big dreams through play, care, and creativity with cutting-edge Society 5.0 integration.
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-5 md:mb-6 opacity-95 leading-relaxed max-w-4xl mx-auto">
+              Where learning meets love. We help little minds grow through play, care, and creativity powered by next-generation Society 5.0 learning.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-8">
+            <div className="mb-8 flex flex-wrap justify-center gap-2 text-xs sm:text-sm">
+              <span className="rounded-full border border-white/35 bg-white/15 px-3 py-1.5 font-medium text-white/95 backdrop-blur-sm">Ages 6 months - 6 years</span>
+              <span className="rounded-full border border-white/35 bg-white/15 px-3 py-1.5 font-medium text-white/95 backdrop-blur-sm">Trusted by 200+ families</span>
+              <span className="rounded-full border border-white/35 bg-white/15 px-3 py-1.5 font-medium text-white/95 backdrop-blur-sm">Safe, caring campus</span>
+            </div>
+
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-white/35 bg-white/10 px-3 py-1 text-xs text-white/90 backdrop-blur-sm">
+              <span>Hero scenes</span>
+              {heroBackgrounds.map((_, index) => (
+                <span
+                  key={`hero-dot-${index}`}
+                  className={`h-2 w-2 rounded-full transition ${heroBackgroundIndex === index ? 'bg-white' : 'bg-white/40'}`}
+                />
+              ))}
+            </div>
+
+            <div className="flex flex-col sm:flex-row gap-3 justify-center items-center mb-6 md:mb-8">
               <motion.a
                 href={`${edusiteproUrl}/registration/young-eagles`}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-white text-blue-600 px-8 py-4 rounded-lg font-bold text-lg shadow-xl hover:shadow-2xl transition-all flex items-center gap-2"
+                className="bg-white text-blue-700 px-6 md:px-8 py-3.5 md:py-4 rounded-xl font-bold text-base md:text-lg shadow-xl hover:shadow-2xl transition-all flex items-center gap-2"
               >
-                Register for 2026 <span>→</span>
+                Start Registration <span>→</span>
               </motion.a>
               <motion.button
                 onClick={() => window.location.href = '/programs'}
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-transparent text-white px-8 py-4 rounded-lg font-semibold text-lg border-2 border-white hover:bg-white hover:text-blue-600 transition-all"
+                className="bg-transparent text-white px-6 md:px-8 py-3.5 md:py-4 rounded-xl font-semibold text-base md:text-lg border-2 border-white hover:bg-white hover:text-blue-700 transition-all"
               >
                 View Programs
               </motion.button>
+              <a
+                href="/contact"
+                className="inline-flex items-center rounded-xl border border-white/50 bg-white/10 px-6 md:px-8 py-3.5 md:py-4 text-base md:text-lg font-semibold text-white hover:bg-white/20 transition-all"
+              >
+                Book a Visit
+              </a>
             </div>
 
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 }}
-              className="inline-flex items-center gap-2 bg-yellow-400 text-gray-900 px-6 py-3 rounded-full font-bold shadow-lg"
-            >
-              <span>🎉</span>
-              <span>2026 Enrollment Now Open - Limited Spaces!</span>
-            </motion.div>
           </motion.div>
         </div>
 
@@ -295,40 +486,151 @@ const ProductionHome = () => {
         </div>
       </section>
 
-      {/* Early Bird Special Banner */}
-      <section className="relative bg-gradient-to-r from-orange-500 via-red-500 to-pink-600 text-white py-6 overflow-hidden">
+      {/* Parent intent section moved out of hero to reduce clutter */}
+      <section className="py-8 md:py-10 bg-gradient-to-b from-slate-100 via-white to-blue-50">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="mx-auto w-full max-w-5xl rounded-2xl border border-blue-100 bg-white p-5 shadow-xl"
+          >
+            <p className="mb-3 text-sm font-semibold uppercase tracking-wide text-blue-700">
+              What matters most to your family?
+            </p>
+            <div className="mb-4 flex flex-wrap gap-2">
+              {parentGoals.map((goal) => (
+                <button
+                  key={goal.id}
+                  type="button"
+                  onClick={() => setSelectedParentGoal(goal.id)}
+                  className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                    selectedParentGoal === goal.id
+                      ? 'bg-blue-600 text-white'
+                      : 'bg-slate-100 text-slate-700 hover:bg-slate-200'
+                  }`}
+                >
+                  {goal.label}
+                </button>
+              ))}
+            </div>
+            <div className="rounded-xl bg-slate-50 p-4 text-left text-slate-800">
+              <p className="text-base font-bold">{activeGoal.title}</p>
+              <p className="mt-1 text-sm text-slate-600">{activeGoal.message}</p>
+              <div className="mt-3 flex flex-wrap items-center gap-2">
+                <a
+                  href={`${edusiteproUrl}/registration/young-eagles`}
+                  className="inline-flex items-center rounded-lg bg-blue-600 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700"
+                >
+                  Start Registration
+                </a>
+                <a
+                  href="/contact"
+                  className="inline-flex items-center rounded-lg border border-slate-300 px-4 py-2 text-sm font-semibold text-slate-700 hover:bg-slate-100"
+                >
+                  Book a Visit
+                </a>
+              </div>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Interactive trust strip */}
+      <section className="py-7 md:py-8 bg-gradient-to-r from-slate-900 via-blue-900 to-indigo-900 text-white">
+        <div className="container mx-auto px-4">
+          <div className="mx-auto max-w-5xl rounded-2xl border border-white/15 bg-white/5 p-5 backdrop-blur-sm">
+            <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+              <p className="text-sm font-semibold uppercase tracking-wider text-blue-100">Trust signals for parents</p>
+              <a href="/contact" className="text-sm font-semibold text-blue-100 hover:text-white transition">Talk to admissions →</a>
+            </div>
+            <div className="mb-4 flex flex-wrap gap-2">
+              {trustSignals.map((signal) => (
+                <button
+                  key={signal.id}
+                  type="button"
+                  onClick={() => setSelectedTrustSignal(signal.id)}
+                  className={`rounded-full px-4 py-2 text-sm font-semibold transition ${
+                    selectedTrustSignal === signal.id
+                      ? 'bg-white text-slate-900'
+                      : 'bg-white/10 text-white hover:bg-white/20'
+                  }`}
+                >
+                  {signal.label}
+                </button>
+              ))}
+            </div>
+            <div className="rounded-xl border border-white/20 bg-slate-950/35 p-4">
+              <p className="text-base font-bold">{activeTrustSignal.title}</p>
+              <p className="mt-1 text-sm text-blue-100/95">{activeTrustSignal.message}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Campaign Status Banner */}
+      <section className={`relative bg-gradient-to-r ${promoBannerClass} text-white py-6 overflow-hidden`}>
         <div className="container mx-auto px-4 relative z-10">
           <div className="flex flex-col items-center gap-4">
             {/* Title and Description */}
             <div className="flex items-center gap-3 text-center">
               <motion.div
-                animate={{ 
-                  scale: [1, 1.2, 1],
-                }}
+                animate={campaignState === 'active' ? { scale: [1, 1.2, 1] } : { scale: [1, 1, 1] }}
                 transition={{ 
                   duration: 2,
-                  repeat: Infinity 
+                  repeat: campaignState === 'active' ? Infinity : 0
                 }}
                 className="text-3xl md:text-4xl"
               >
-                🔥
+                {campaignState === 'active' ? '🔥' : '📢'}
               </motion.div>
               <div>
-                <h3 className="text-lg sm:text-xl md:text-2xl font-bold leading-tight">Early Bird Special: 50% OFF Registration!</h3>
-                <p className="text-xs sm:text-sm opacity-90">Limited to first 50 families only</p>
+                <h3 className="text-lg sm:text-xl md:text-2xl font-bold leading-tight">{promoTitle}</h3>
+                <p className="text-xs sm:text-sm opacity-90">{promoSubtitle}</p>
               </div>
             </div>
 
             {/* Spots Left Counter */}
             <div className="bg-white/20 backdrop-blur-sm rounded-lg px-4 py-2 border border-white/30">
               <div className="flex items-center gap-2">
-                <span className="text-sm font-semibold">🎯 Spots Left:</span>
-                <span className="text-2xl font-black">{liveSpots !== null ? liveSpots : '...'}</span>
-                <span className="text-sm">/ 50</span>
+                <span className="text-sm font-semibold">
+                  {campaignState === 'active' ? '🎯 Spots Left:' : '📌 Campaign Status:'}
+                </span>
+                {campaignState === 'active' ? (
+                  <>
+                    <span className="text-2xl font-black">
+                      {campaignLoading ? '...' : (liveSpots !== null ? liveSpots : '--')}
+                    </span>
+                    <span className="text-sm">/ {maxSpots ?? 50}</span>
+                  </>
+                ) : (
+                  <span className="text-lg font-bold">
+                    {campaignState === 'sold_out' ? 'Sold Out' : campaignState === 'expired' ? 'Expired' : 'Not Running'}
+                  </span>
+                )}
               </div>
+              {lastUpdatedText ? (
+                <p className="mt-1 text-center text-xs text-white/80">Last updated: {lastUpdatedText}</p>
+              ) : null}
             </div>
 
+            {campaignState === 'active' && spotsProgress !== null ? (
+              <div className="w-full max-w-sm">
+                <div className="mb-1 flex justify-between text-xs text-white/90">
+                  <span>Availability remaining</span>
+                  <span>{spotsProgress}%</span>
+                </div>
+                <div className="h-2 w-full rounded-full bg-white/25">
+                  <div
+                    className="h-2 rounded-full bg-yellow-300 transition-all"
+                    style={{ width: `${spotsProgress}%` }}
+                  />
+                </div>
+              </div>
+            ) : null}
+
             {/* Timers - Responsive Layout */}
+            {campaignState === 'active' && (
             <div className="w-full flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-6">
               {/* ENDS IN Timer - Show only this on mobile */}
               <div className="flex flex-col items-center gap-2 w-full sm:w-auto">
@@ -361,27 +663,48 @@ const ProductionHome = () => {
                 </div>
               </div>
             </div>
+            )}
 
             {/* CTA Button */}
             <div className="w-full sm:w-auto">
-              <motion.a
-                href={`${edusiteproUrl}/registration/young-eagles`}
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white text-orange-600 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-bold text-sm sm:text-base hover:bg-opacity-90 transition-all shadow-lg"
-              >
-                <span>Register Now!</span>
-                <span className="text-lg sm:text-xl">🚀</span>
-              </motion.a>
+              <div className="flex flex-col items-center gap-2 sm:flex-row">
+                {campaignState === 'active' ? (
+                  <motion.a
+                    href={`${edusiteproUrl}/registration/young-eagles`}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white text-orange-600 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-bold text-sm sm:text-base hover:bg-opacity-90 transition-all shadow-lg"
+                  >
+                    <span>Claim 50% Promo</span>
+                    <span className="text-lg sm:text-xl">🚀</span>
+                  </motion.a>
+                ) : (
+                  <motion.a
+                    href={`${edusiteproUrl}/registration/young-eagles`}
+                    whileHover={{ scale: 1.03 }}
+                    whileTap={{ scale: 0.98 }}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white text-slate-800 px-6 sm:px-8 py-2.5 sm:py-3 rounded-full font-bold text-sm sm:text-base hover:bg-opacity-90 transition-all shadow-lg"
+                  >
+                    <span>Continue Registration</span>
+                    <span className="text-lg sm:text-xl">→</span>
+                  </motion.a>
+                )}
+                <a
+                  href="/contact"
+                  className="w-full sm:w-auto inline-flex items-center justify-center rounded-full border border-white/40 bg-white/10 px-6 sm:px-8 py-2.5 sm:py-3 text-sm sm:text-base font-semibold text-white hover:bg-white/20 transition-all"
+                >
+                  {campaignState === 'active' ? 'Book a Tour First' : 'Join Waitlist / Contact'}
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Stats Section */}
-      <section className="py-16 bg-gray-50">
+      <section className="py-12 md:py-16 bg-gradient-to-b from-slate-50 to-blue-50/60">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12">Trusted by Families Everywhere</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 md:mb-12">Trusted by Families Everywhere</h2>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => {
@@ -391,11 +714,12 @@ const ProductionHome = () => {
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
+                  whileHover={{ y: -6, scale: 1.02 }}
                   transition={{ delay: index * 0.1 }}
-                  className="text-center"
+                  className="text-center rounded-2xl border border-slate-200/80 bg-white/80 p-6 shadow-sm backdrop-blur-sm"
                 >
-                  <Icon className={`text-5xl ${stat.color} mx-auto mb-4`} />
-                  <div className="text-4xl font-bold text-gray-900 mb-2">{stat.number}</div>
+                  <Icon className={`text-4xl md:text-5xl ${stat.color} mx-auto mb-4`} />
+                  <div className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">{stat.number}</div>
                   <div className="text-gray-600">{stat.label}</div>
                 </motion.div>
               );
@@ -403,12 +727,13 @@ const ProductionHome = () => {
           </div>
         </div>
       </section>
+      <div className="mx-auto h-px w-[92%] bg-gradient-to-r from-transparent via-blue-200 to-transparent" />
 
       {/* Why Choose Section */}
-      <section className="py-16 bg-white">
+      <section className="py-12 md:py-16 bg-gradient-to-b from-white to-slate-50">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Why Choose Young Eagles?</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Why Choose Young Eagles?</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               We combine traditional nurturing care with innovative Society 5.0 technology to prepare your child for the future.
             </p>
@@ -422,10 +747,11 @@ const ProductionHome = () => {
                   key={index}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
+                  whileHover={{ y: -8 }}
                   transition={{ delay: index * 0.1 }}
-                  className="text-center p-6 rounded-xl hover:shadow-lg transition-shadow"
+                  className="group text-center p-6 rounded-xl border border-slate-200 bg-white hover:shadow-lg transition-all"
                 >
-                  <Icon className={`text-5xl ${feature.color} mx-auto mb-4`} />
+                  <Icon className={`text-5xl ${feature.color} mx-auto mb-4 transition-transform group-hover:scale-110`} />
                   <h3 className="text-xl font-bold mb-3">{feature.title}</h3>
                   <p className="text-gray-600">{feature.description}</p>
                 </motion.div>
@@ -435,11 +761,85 @@ const ProductionHome = () => {
         </div>
       </section>
 
-      {/* Programs Section */}
-      <section className="py-16 bg-gray-50">
+      {/* Our Campus - real preschool photos for trust and branding */}
+      <section className="py-12 md:py-16 bg-gradient-to-b from-slate-50 to-blue-50/60">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Our Programs</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Campus</h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Bright, safe spaces where children learn and play every day.
+            </p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -8 }}
+              transition={{ delay: 0.1 }}
+              className="rounded-xl overflow-hidden shadow-lg transition-all"
+            >
+              <img
+                src="/campus/campus-4.jpeg"
+                alt="Group activity in the hall at Young Eagles"
+                className="w-full aspect-[4/3] object-cover"
+              />
+              <div className="p-4 bg-white">
+                <h3 className="font-bold text-lg text-gray-900">Learning Together</h3>
+                <p className="text-gray-600 text-sm">Structured activities and caring supervision in our multipurpose hall.</p>
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -8 }}
+              transition={{ delay: 0.2 }}
+              className="rounded-xl overflow-hidden shadow-lg transition-all"
+            >
+              <img
+                src="/campus/campus-6.jpeg"
+                alt="Outdoor patio and events at Young Eagles"
+                className="w-full aspect-[4/3] object-cover"
+              />
+              <div className="p-4 bg-white">
+                <h3 className="font-bold text-lg text-gray-900">Events & Celebrations</h3>
+                <p className="text-gray-600 text-sm">Child-sized tables and a welcoming space for special moments.</p>
+              </div>
+            </motion.div>
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -8 }}
+              transition={{ delay: 0.3 }}
+              className="rounded-xl overflow-hidden shadow-lg transition-all"
+            >
+              <img
+                src="/campus/campus-5.jpeg"
+                alt="Our learners in uniform at Young Eagles"
+                className="w-full aspect-[4/3] object-cover"
+              />
+              <div className="p-4 bg-white">
+                <h3 className="font-bold text-lg text-gray-900">A Day at Young Eagles</h3>
+                <p className="text-gray-600 text-sm">Our learners in a bright, connected campus environment.</p>
+              </div>
+            </motion.div>
+          </div>
+          <div className="text-center mt-8">
+            <a
+              href="/gallery"
+              className="inline-flex items-center gap-2 rounded-full bg-blue-600 text-white px-6 py-3 font-semibold hover:bg-blue-700 transition"
+            >
+              View full gallery
+            </a>
+          </div>
+        </div>
+      </section>
+      <div className="mx-auto h-px w-[92%] bg-gradient-to-r from-transparent via-indigo-200 to-transparent" />
+
+      {/* Programs Section */}
+      <section className="py-12 md:py-16 bg-gradient-to-b from-slate-50 to-white">
+        <div className="container mx-auto px-4">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Our Programs</h2>
             <p className="text-xl text-gray-600">
               Age-appropriate curricula designed to nurture every stage of development
             </p>
@@ -453,8 +853,9 @@ const ProductionHome = () => {
                   key={index}
                   initial={{ opacity: 0, scale: 0.9 }}
                   whileInView={{ opacity: 1, scale: 1 }}
+                  whileHover={{ y: -8, scale: 1.03 }}
                   transition={{ delay: index * 0.1 }}
-                  className={`${program.bgColor} p-6 rounded-xl hover:shadow-lg transition-all`}
+                  className={`${program.bgColor} p-6 rounded-xl border border-white/70 hover:shadow-lg transition-all`}
                 >
                   <Icon className={`text-4xl ${program.color} mb-4`} />
                   <h3 className="text-xl font-bold mb-2">{program.title}</h3>
@@ -477,9 +878,9 @@ const ProductionHome = () => {
       </section>
 
       {/* Testimonials Section */}
-      <section className="py-16 bg-white">
+      <section className="py-12 md:py-16 bg-gradient-to-b from-white to-slate-50">
         <div className="container mx-auto px-4">
-          <h2 className="text-4xl font-bold text-center mb-12">What Parents Say</h2>
+          <h2 className="text-3xl md:text-4xl font-bold text-center mb-10 md:mb-12">What Parents Say</h2>
 
           <div className="grid md:grid-cols-2 gap-8 max-w-5xl mx-auto">
             {testimonials.map((testimonial, index) => (
@@ -511,9 +912,9 @@ const ProductionHome = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-16 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
+      <section className="py-12 md:py-16 bg-gradient-to-r from-blue-600 to-blue-800 text-white">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-4xl font-bold mb-4">Ready to Give Your Child the Best Start?</h2>
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">Ready to Give Your Child the Best Start?</h2>
           <p className="text-xl mb-8 opacity-90">
             Join hundreds of families who trust Young Eagles for their child's educational journey
           </p>
@@ -528,7 +929,7 @@ const ProductionHome = () => {
       </section>
 
       {/* EduDash Pro App Marketing Section */}
-      <section className="py-20 bg-gradient-to-br from-purple-600 via-pink-600 to-red-600 text-white relative overflow-hidden">
+      <section className="py-14 md:py-20 bg-gradient-to-br from-purple-600 via-pink-600 to-red-600 text-white relative overflow-hidden">
         <div className="absolute inset-0 bg-black/10"></div>
         
         <div className="container mx-auto px-4 relative z-10">
@@ -539,7 +940,7 @@ const ProductionHome = () => {
                 <span className="text-sm font-semibold">📱 FREE PARENT APP</span>
               </div>
               
-              <h2 className="text-5xl font-bold mb-6 leading-tight">
+              <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold mb-5 md:mb-6 leading-tight">
                 Stay Connected with<br />
                 <span className="text-yellow-300">EduDash Pro</span>
               </h2>
@@ -597,7 +998,7 @@ const ProductionHome = () => {
                   href="https://edudashpro.org.za"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-4 bg-white text-purple-600 hover:bg-gray-100 px-8 py-5 rounded-2xl transition-all transform hover:scale-105 shadow-2xl group"
+                  className="flex items-center gap-4 bg-white text-purple-600 hover:bg-gray-100 px-6 md:px-8 py-4 md:py-5 rounded-2xl transition-all transform hover:scale-105 shadow-2xl group"
                 >
                   <div className="w-14 h-14 bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
                     <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
@@ -717,7 +1118,7 @@ const ProductionHome = () => {
       </section>
 
       {/* Technology & Innovation Section */}
-      <section className="py-16 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white relative overflow-hidden">
+      <section className="py-12 md:py-16 bg-gradient-to-br from-blue-600 via-blue-700 to-indigo-800 text-white relative overflow-hidden">
         {/* Background circles */}
         <div className="absolute inset-0 overflow-hidden">
           {[...Array(6)].map((_, i) => (
@@ -739,7 +1140,7 @@ const ProductionHome = () => {
             <div className="w-20 h-20 bg-white/20 rounded-full flex items-center justify-center mx-auto mb-6">
               <FaRocket className="text-5xl" />
             </div>
-            <h2 className="text-4xl font-bold mb-4">Advanced Learning Technology</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Advanced Learning Technology</h2>
             <p className="text-xl opacity-90 max-w-3xl mx-auto">
               We integrate cutting-edge educational technology to provide comprehensive learning experiences. Track progress, communicate with teachers, and access digital resources seamlessly.
             </p>

@@ -63,7 +63,7 @@ const Contact = () => {
     {
       icon: FaPhone,
       title: "Phone",
-      details: ["081 523 6000 (Main)", "067 494 2359 (Secondary)"],
+      details: ["+2781 523 6000 (Main)", "067 494 2359 (Secondary)"],
       color: "text-blue-600"
     },
     {
@@ -104,7 +104,7 @@ const Contact = () => {
     <>
       <SEOManager 
         title="Contact Young Eagles Education Platform - Get in Touch Today"
-        description="Contact Young Eagles Education Platform for enrollment, tours, and questions about our premium daycare and early learning programs. Call us at (555) 123-4567."
+        description="Contact Young Eagles Education Platform for enrollment, tours, and questions about our premium daycare and early learning programs. Call us at +2781 523 6000."
         keywords="contact young eagles, daycare enrollment, schedule tour, early learning contact, STEM education inquiry"
         url="https://youngeagles.edu/contact"
       />
@@ -191,7 +191,7 @@ const Contact = () => {
                           value={formData.phone}
                           onChange={handleChange}
                           className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                          placeholder="(555) 123-4567"
+                          placeholder="+2781 523 6000"
                         />
                       </div>
                       <div>
@@ -315,14 +315,30 @@ const Contact = () => {
                   </div>
                 </div>
 
-                {/* Map Placeholder */}
+                {/* Location Map */}
                 <div className="bg-white rounded-xl shadow-lg overflow-hidden">
-                  <div className="h-64 bg-gradient-to-br from-blue-100 to-purple-100 flex items-center justify-center">
-                    <div className="text-center">
-                      <FaMapMarkerAlt className="text-4xl text-blue-600 mx-auto mb-2" />
-                      <p className="text-gray-600">Interactive Map Coming Soon</p>
-                      <p className="text-sm text-gray-500">123 Learning Lane, Education City</p>
+                  <div className="h-64">
+                    <iframe
+                      title="Young Eagles Location Map"
+                      src="https://www.google.com/maps?q=848+Shabanbu+Avenue,+Mamelodi,+Pretoria+0122&output=embed"
+                      className="w-full h-full border-0"
+                      loading="lazy"
+                      referrerPolicy="no-referrer-when-downgrade"
+                    />
+                  </div>
+                  <div className="px-4 py-3 border-t bg-slate-50 flex items-center justify-between gap-3">
+                    <div>
+                      <p className="text-sm text-slate-700">Official address: 7118 Section U Shabangu Street, Mamelodi Pretoria 0122</p>
+                      <p className="text-xs text-slate-500 mt-1">Navigation pin: 848 Shabanbu Avenue, Mamelodi, Pretoria 0122</p>
                     </div>
+                    <a
+                      href="https://www.google.com/maps/search/?api=1&query=848+Shabanbu+Avenue,+Mamelodi,+Pretoria+0122"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-sm font-semibold text-blue-600 hover:text-blue-700 whitespace-nowrap"
+                    >
+                      Open in Maps
+                    </a>
                   </div>
                 </div>
 
@@ -397,8 +413,8 @@ const Contact = () => {
           <div className="container mx-auto px-4 text-center">
             <h2 className="text-2xl font-bold text-red-800 mb-4">Emergency Contact</h2>
             <p className="text-red-700 mb-4">For urgent matters outside business hours:</p>
-            <a href="tel:+15551234567" className="text-xl font-bold text-red-800 hover:text-red-900">
-              Emergency Line: +1 (555) 123-4567
+            <a href="tel:+27815236000" className="text-xl font-bold text-red-800 hover:text-red-900">
+              Emergency Line: +2781 523 6000
             </a>
           </div>
         </section>
