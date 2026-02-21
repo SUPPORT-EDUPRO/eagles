@@ -933,7 +933,7 @@ const ProductionHome = () => {
         <div className="absolute inset-0 bg-black/10"></div>
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
+          <div className="grid lg:grid-cols-2 gap-8 md:gap-12 items-center">
             {/* Left: App Info */}
             <div>
               <div className="inline-block bg-white/20 backdrop-blur-sm px-4 py-2 rounded-full mb-6">
@@ -945,11 +945,11 @@ const ProductionHome = () => {
                 <span className="text-yellow-300">EduDash Pro</span>
               </h2>
               
-              <p className="text-xl mb-8 opacity-95">
-                Download the official Young Eagles parent app and stay connected with your child's learning journey 24/7. Get real-time updates, track progress, and communicate with teachers instantly.
+              <p className="text-base sm:text-lg md:text-xl mb-6 md:mb-8 opacity-95">
+                Download the official Young Eagles parent app to track progress, communicate with teachers, and stay updated in real time.
               </p>
 
-              <div className="space-y-4 mb-8">
+              <div className="space-y-3 md:space-y-4 mb-6 md:mb-8">
                 <div className="flex items-start gap-4">
                   <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
                     <span className="text-2xl">📊</span>
@@ -979,76 +979,49 @@ const ProductionHome = () => {
                     <p className="opacity-90">Get instant help with homework using our Dash AI assistant</p>
                   </div>
                 </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0">
-                    <span className="text-2xl">📸</span>
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-lg mb-1">Photo & Video Sharing</h4>
-                    <p className="opacity-90">See your child's daily moments, activities, and achievements</p>
-                  </div>
-                </div>
               </div>
 
-              {/* Access App Button */}
-              <div className="space-y-4">
-                {/* Web App - Available Now */}
+              {/* Simplified CTA hierarchy */}
+              <div className="space-y-3">
                 <a
                   href="https://edudashpro.org.za"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-4 bg-white text-purple-600 hover:bg-gray-100 px-6 md:px-8 py-4 md:py-5 rounded-2xl transition-all transform hover:scale-105 shadow-2xl group"
+                  className="flex items-center gap-4 bg-white text-purple-600 hover:bg-gray-100 px-5 md:px-8 py-4 md:py-5 rounded-2xl transition-all transform hover:scale-[1.02] shadow-2xl group"
                 >
-                  <div className="w-14 h-14 bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
+                  <div className="w-12 h-12 md:w-14 md:h-14 bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl flex items-center justify-center group-hover:scale-110 transition-transform">
                     <svg className="w-8 h-8 text-white" viewBox="0 0 24 24" fill="currentColor">
                       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                     </svg>
                   </div>
                   <div className="text-left flex-1">
                     <div className="text-sm font-bold text-purple-700 mb-1">✨ AVAILABLE NOW</div>
-                    <div className="font-black text-2xl text-gray-900 mb-1">Access EduDash Pro</div>
-                    <div className="text-sm text-gray-600">Works on all devices • Android, iOS, Desktop</div>
+                    <div className="font-black text-xl md:text-2xl text-gray-900 mb-1">Access EduDash Pro</div>
+                    <div className="text-xs md:text-sm text-gray-600">Works on mobile and desktop</div>
                   </div>
                   <svg className="w-6 h-6 text-purple-600 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                   </svg>
                 </a>
-
-                {/* Native App Buttons - Coming Soon */}
-                <div className="grid grid-cols-2 gap-3 mt-4">
-                  <div className="flex items-center justify-center gap-2 rounded-xl bg-white/90 backdrop-blur-sm border-2 border-white px-4 py-4 text-sm shadow-lg">
-                    <svg className="h-6 w-6 text-green-600" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M3,20.5V3.5C3,2.91 3.34,2.39 3.84,2.15L13.69,12L3.84,21.85C3.34,21.6 3,21.09 3,20.5M16.81,15.12L6.05,21.34L14.54,12.85L16.81,15.12M20.16,10.81C20.5,11.08 20.75,11.5 20.75,12C20.75,12.5 20.5,12.92 20.16,13.19L17.89,14.5L15.39,12L17.89,9.5L20.16,10.81M6.05,2.66L16.81,8.88L14.54,11.15L6.05,2.66Z"/>
-                    </svg>
-                    <span className="font-semibold text-gray-900">Google Play</span>
-                    <span className="text-xs bg-yellow-400 text-yellow-900 px-2 py-1 rounded-full font-bold">SOON</span>
-                  </div>
-                  <div className="flex items-center justify-center gap-2 rounded-xl bg-white/90 backdrop-blur-sm border-2 border-white px-4 py-4 text-sm shadow-lg">
-                    <svg className="h-6 w-6 text-gray-800" viewBox="0 0 24 24" fill="currentColor">
-                      <path d="M18.71 19.5C17.88 20.74 17 21.95 15.66 21.97C14.32 22 13.89 21.18 12.37 21.18C10.84 21.18 10.37 21.95 9.1 22C7.79 22.05 6.8 20.68 5.96 19.47C4.25 17 2.94 12.45 4.7 9.39C5.57 7.87 7.13 6.91 8.82 6.88C10.1 6.86 11.32 7.75 12.11 7.75C12.89 7.75 14.37 6.68 15.92 6.84C16.57 6.87 18.39 7.1 19.56 8.82C19.47 8.88 17.39 10.1 17.41 12.63C17.44 15.65 20.06 16.66 20.09 16.67C20.06 16.74 19.67 18.11 18.71 19.5M13 3.5C13.73 2.67 14.94 2.04 15.94 2C16.07 3.17 15.6 4.35 14.9 5.19C14.21 6.04 13.07 6.7 11.95 6.61C11.8 5.46 12.36 4.26 13 3.5Z"/>
-                    </svg>
-                    <span className="font-semibold text-gray-900">App Store</span>
-                    <span className="text-xs bg-yellow-400 text-yellow-900 px-2 py-1 rounded-full font-bold">SOON</span>
-                  </div>
+                <div className="flex flex-wrap items-center gap-3 text-sm">
+                  <a
+                    href="/contact"
+                    className="inline-flex items-center justify-center rounded-xl border border-white/40 bg-white/10 px-5 py-3 font-semibold text-white hover:bg-white/20 transition"
+                  >
+                    Need help installing?
+                  </a>
+                  <span className="rounded-full bg-white/15 px-3 py-1 text-xs font-semibold">Google Play & App Store coming soon</span>
                 </div>
               </div>
 
-              <div className="mt-6 bg-white/10 backdrop-blur-sm rounded-xl p-4 border border-white/20">
-                <p className="text-sm font-semibold mb-2">📱 Mobile App Installation:</p>
-                <p className="text-sm opacity-90">
-                  After enrolling, you'll receive instructions to install the EduDash Pro app on your phone. Works just like a native app!
-                </p>
-              </div>
-
-              <p className="mt-4 text-sm opacity-90">
-                💜 Join 1,000+ parents already using EduDash Pro • Free forever • No ads
+              <p className="mt-3 text-xs sm:text-sm opacity-90">
+                💜 Join 1,000+ parents already using EduDash Pro • Free plan available • Ad-supported on free tier
               </p>
             </div>
 
             {/* Right: App Screenshot */}
-            <div className="relative flex justify-center lg:justify-start">
-              <div className="relative mx-auto max-w-[280px] sm:max-w-xs lg:max-w-sm">
+            <div className="relative flex justify-center lg:justify-start order-first lg:order-none">
+              <div className="relative mx-auto max-w-[220px] sm:max-w-xs lg:max-w-sm">
                 {/* Phone Frame with actual screenshot */}
                 <div className="relative bg-gray-900 rounded-[2.5rem] sm:rounded-[3rem] p-2 sm:p-3 shadow-2xl transform rotate-3 lg:rotate-6 hover:rotate-0 transition-transform duration-500">
                   <img 
@@ -1105,10 +1078,10 @@ const ProductionHome = () => {
                 </div>
 
                 {/* Floating badges */}
-                <div className="absolute -top-4 -left-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-full font-bold shadow-lg">
+                <div className="hidden sm:block absolute -top-4 -left-4 bg-gradient-to-r from-purple-600 to-pink-600 text-white px-4 py-2 rounded-full font-bold shadow-lg">
                   PWA App
                 </div>
-                <div className="absolute -bottom-4 -right-4 bg-white text-purple-600 px-4 py-2 rounded-full font-bold shadow-lg">
+                <div className="hidden sm:block absolute -bottom-4 -right-4 bg-white text-purple-600 px-4 py-2 rounded-full font-bold shadow-lg">
                   AI Powered
                 </div>
               </div>
