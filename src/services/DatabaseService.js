@@ -6,7 +6,7 @@ class DatabaseService {
     this.supabase = supabase;
   }
 
-  // Register for 2026 intake
+  // Register for 2027 intake
   async register2026(data) {
     try {
       const { data: result, error } = await this.supabase
@@ -25,7 +25,7 @@ class DatabaseService {
           preferred_start_date: data.preferredStartDate || null,
           how_did_you_hear: data.referralSource || null,
           special_requests: data.specialRequests || null,
-          academic_year: '2026',
+          academic_year: '2027',
           status: 'pending',
           early_bird: data.earlyBird || true,
           submission_date: new Date().toISOString()

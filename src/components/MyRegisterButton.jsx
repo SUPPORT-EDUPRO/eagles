@@ -23,7 +23,7 @@ function MyRegisterButton({ className = "", variant = "primary" }) {
       className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl ${variants[variant]} ${className}`}
     >
       <FaCalendarAlt />
-      Register for 2026
+      Register for 2027
     </motion.button>
   );
 }

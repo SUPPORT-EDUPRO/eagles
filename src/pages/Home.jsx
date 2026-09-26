@@ -260,14 +260,14 @@ const Home = () => {
             Young Eagles introduces coding, robotics, and computer literacy to kids using fun tools like <strong>ScratchJr</strong>, <strong>Blockly</strong>, and hands-on STEM kits.
           </p>
           <div className="flex justify-center gap-4">
-            <Link
-              to="/register"
+            <a
+              href="https://edusitepro.edudashpro.org.za/registration/young-eagles"
               className="bg-green-600 text-white px-6 py-3 rounded-lg hover:bg-green-500 transform hover:scale-105 transition duration-300 ease-in-out font-semibold"
               data-aos="fade-left"
               data-aos-delay="200"
             >
-              📚 Register for 2026
-            </Link>
+              📚 Register for 2027
+            </a>
             <Link
               to="/contact"
               className="bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-500 transform hover:scale-105 transition duration-300 ease-in-out"

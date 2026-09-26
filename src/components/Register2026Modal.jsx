@@ -59,7 +59,7 @@ const Register2026Modal = ({ isOpen, onClose }) => {
       
       if (result.success !== false) {
         toast.success('Registration successful! We\'ll contact you soon.', {
-          description: 'Welcome to Young Eagles 2026 intake!'
+          description: 'Welcome to Young Eagles 2027 intake!'
         });
         setCurrentStep(4); // Success step
       } else {
@@ -121,7 +121,7 @@ const Register2026Modal = ({ isOpen, onClose }) => {
           <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-6">
             <div className="flex items-center justify-between">
               <div>
-                <h2 className="text-2xl font-bold">Register for 2026 Intake</h2>
+                <h2 className="text-2xl font-bold">Register for 2027 Intake</h2>
                 <p className="opacity-90">Secure your child's spot at Young Eagles</p>
               </div>
               <button
@@ -347,8 +347,8 @@ const Register2026Modal = ({ isOpen, onClose }) => {
                         name="preferredStartDate"
                         value={formData.preferredStartDate}
                         onChange={handleInputChange}
-                        min="2026-01-01"
-                        max="2026-12-31"
+                        min="2027-01-01"
+                        max="2027-12-31"
                         className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                       />
                     </div>
@@ -417,7 +417,7 @@ const Register2026Modal = ({ isOpen, onClose }) => {
                     </div>
                     <h3 className="text-2xl font-bold text-green-600 mb-2">Registration Successful!</h3>
                     <p className="text-gray-600 mb-6">
-                      Thank you for registering for our 2026 intake. We'll contact you soon with more details.
+                      Thank you for registering for our 2027 intake. We'll contact you soon with more details.
                     </p>
                     <button
                       onClick={handleClose}

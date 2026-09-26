@@ -424,7 +424,7 @@ const ProductionHome = () => {
             <div className="mb-4 inline-flex items-center gap-2 rounded-full border border-white/40 bg-white/15 px-4 py-2 text-xs font-semibold uppercase tracking-wide text-blue-100 backdrop-blur-sm">
               <span>Admissions</span>
               <span className="h-1 w-1 rounded-full bg-white/70" />
-              <span>{campaignState === 'active' ? 'Promo live now' : 'Open for 2026 intake'}</span>
+              <span>{campaignState === 'active' ? 'Promo live now' : 'Open for 2027 intake'}</span>
             </div>
 
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4 md:mb-5 leading-tight">
