@@ -2,14 +2,15 @@ import React, { useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FaWhatsapp, FaTimes, FaComment } from 'react-icons/fa';
 
+import { WHATSAPP_E164 } from '../config/marketing';
+
 const WhatsAppFloat = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
-  const whatsappNumber = '0815236000';
   const welcomeMessage = "Hi! I'm interested in Young Eagles Education Platform. Can you help me?";
 
   const handleWhatsAppClick = () => {
-    const url = `https://wa.me/${whatsappNumber}?text=${encodeURIComponent(welcomeMessage)}`;
+    const url = `https://wa.me/${WHATSAPP_E164}?text=${encodeURIComponent(welcomeMessage)}`;
     window.open(url, '_blank');
     setIsOpen(false);
   };

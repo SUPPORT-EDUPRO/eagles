@@ -6,7 +6,7 @@ const SEOManager = ({
   description = "Premium daycare and early learning center with Society 5.0 integration",
   keywords = "daycare, early learning, child development, STEM education",
   image = "/app-icons/og-image.png",
-  url = "https://youngeagles.edu",
+  url = "https://www.youngeagles.org.za",
   type = "website"
 }) => {
   return (

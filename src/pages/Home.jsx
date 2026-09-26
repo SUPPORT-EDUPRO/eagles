@@ -65,7 +65,7 @@ const Home = () => {
         title="Young Eagles Education Platform - Premium Daycare & Early Learning"
         description="Award-winning daycare and early learning center featuring Society 5.0 integration, STEM programs, and comprehensive child development for ages 6 months to 6 years."
         keywords="daycare, early learning, child development, STEM education, Society 5.0, preschool, infant care, toddler programs, young eagles"
-        url="https://youngeagles.edu"
+        url="https://www.youngeagles.org.za"
       />
       
       {/* Early Bird Promo Banner - Fixed at top */}

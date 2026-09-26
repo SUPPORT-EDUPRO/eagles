@@ -5,6 +5,7 @@ import { RiCloseCircleFill } from "react-icons/ri";
 // Using yehc_logo.png for the Young Eagles Home Care Centre branding
 import useRedirect from "../hooks/useRedirect";
 import { motion, AnimatePresence } from "framer-motion";
+import { youngEaglesRegistrationUrl } from "../config/marketing";
 
 const links = [
   { to: "/", label: "Home" },
@@ -12,6 +13,12 @@ const links = [
   { to: "/about", label: "About" },
   { to: "/contact", label: "Contact" },
   { to: "/gallery", label: "Gallery" },
+  {
+    to: youngEaglesRegistrationUrl(),
+    label: "Register for 2027",
+    external: true,
+    highlight: true,
+  },
 ];
 
 const styles = {
@@ -116,12 +123,23 @@ function Navbar() {
                     transition={{ delay: 0.1 * (i + 1) }}
                     className="cursor-pointer w-full"
                     onClick={() =>
-                      link.isRedirect
+                      link.external
+                        ? toggleMenu()
+                        : link.isRedirect
                         ? handleRedirect(link.to)
                         : toggleMenu()
                     }
                   >
-                    {link.isRedirect ? (
+                    {link.external ? (
+                      <a
+                        href={link.to}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className={link.highlight ? styles.highlight : styles.link}
+                      >
+                        {link.label}
+                      </a>
+                    ) : link.isRedirect ? (
                       <span className={styles.link}>{link.label}</span>
                     ) : (
                       <Link to={link.to} className={link.highlight ? styles.highlight : styles.link}>

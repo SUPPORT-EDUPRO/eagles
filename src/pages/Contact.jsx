@@ -4,10 +4,6 @@ import {
   FaEnvelope, 
   FaMapMarkerAlt, 
   FaClock, 
-  FaFacebook, 
-  FaInstagram, 
-  FaTwitter, 
-  FaLinkedin,
   FaStar,
   FaCheckCircle,
   FaPaperPlane,
@@ -17,6 +13,8 @@ import {
 } from 'react-icons/fa';
 import SEOManager from '../components/SEO/SEOManager';
 import { EducationalBanner, SidebarAd } from '../components/Ads/AdManager_Safe';
+import SocialLinks from '../components/SocialLinks';
+import { youngEaglesRegistrationUrl } from '../config/marketing';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -86,13 +84,6 @@ const Contact = () => {
     }
   ];
 
-  const socialLinks = [
-    { icon: FaFacebook, url: "#", color: "text-blue-600 hover:text-blue-800" },
-    { icon: FaInstagram, url: "#", color: "text-pink-600 hover:text-pink-800" },
-    { icon: FaTwitter, url: "#", color: "text-blue-400 hover:text-blue-600" },
-    { icon: FaLinkedin, url: "#", color: "text-blue-700 hover:text-blue-900" }
-  ];
-
   const quickStats = [
     { icon: FaChild, number: "200+", label: "Happy Children" },
     { icon: FaUsers, number: "50+", label: "Expert Staff" },
@@ -106,7 +97,7 @@ const Contact = () => {
         title="Contact Young Eagles Education Platform - Get in Touch Today"
         description="Contact Young Eagles Education Platform for enrollment, tours, and questions about our premium daycare and early learning programs. Call us at +2781 523 6000."
         keywords="contact young eagles, daycare enrollment, schedule tour, early learning contact, STEM education inquiry"
-        url="https://youngeagles.edu/contact"
+        url="https://www.youngeagles.org.za/contact"
       />
       
       <div className="min-h-screen pt-16">
@@ -117,7 +108,13 @@ const Contact = () => {
             <p className="text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto">
               Ready to give your child the best start? Let's connect and discuss how we can help your little one soar!
             </p>
-            <div className="w-24 h-1 bg-yellow-400 mx-auto"></div>
+            <div className="w-24 h-1 bg-yellow-400 mx-auto mb-8"></div>
+            <a
+              href={youngEaglesRegistrationUrl()}
+              className="inline-flex items-center justify-center rounded-full bg-white px-8 py-3 font-bold text-blue-700 hover:bg-blue-50"
+            >
+              Register for 2027
+            </a>
           </div>
         </section>
 
@@ -345,22 +342,12 @@ const Contact = () => {
                 {/* Social Media */}
                 <div className="bg-white rounded-xl shadow-lg p-8">
                   <h3 className="text-xl font-bold text-gray-900 mb-4">Follow Us</h3>
-                  <div className="flex space-x-4">
-                    {socialLinks.map((social, index) => {
-                      const IconComponent = social.icon;
-                      return (
-                        <a
-                          key={index}
-                          href={social.url}
-                          className={`text-2xl ${social.color} transition-colors duration-200`}
-                        >
-                          <IconComponent />
-                        </a>
-                      );
-                    })}
-                  </div>
+                  <SocialLinks
+                    linkClassName="text-slate-800 hover:text-blue-700 focus-visible:outline-blue-600"
+                    iconClassName="text-xl"
+                  />
                   <p className="text-gray-600 text-sm mt-4">
-                    Stay connected for updates, photos, and parenting tips!
+                    Facebook, TikTok, and WhatsApp are the public channels listed on our school Facebook page.
                   </p>
                 </div>
               </div>
