@@ -31,7 +31,7 @@ const Footer = () => (
             <li><Link to="/contact">Contact</Link></li>
             <li>
               <a href={youngEaglesRegistrationUrl()} target="_blank" rel="noopener noreferrer">
-                Enquire for 2027
+                Register for 2027
               </a>
             </li>
           </ul>

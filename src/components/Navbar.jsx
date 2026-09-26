@@ -79,7 +79,7 @@ function Navbar() {
             target="_blank"
             rel="noopener noreferrer"
           >
-            Enquire for 2027
+            Register for 2027
           </a>
         </div>
 
@@ -121,7 +121,7 @@ function Navbar() {
             rel="noopener noreferrer"
             onClick={() => setIsMenuOpen(false)}
           >
-            Enquire for 2027
+            Register for 2027
           </a>
         </div>
       </nav>

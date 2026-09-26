@@ -93,7 +93,7 @@ function ProductionHome() {
                 target="_blank"
                 rel="noopener noreferrer"
               >
-                Enquire for 2027
+                Register for 2027
                 <FaArrowRight aria-hidden="true" />
               </a>
               <Link className="ye-btn ye-btn-outline" to="/programs">
@@ -251,7 +251,7 @@ function ProductionHome() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              Enquire for 2027
+              Register for 2027
             </a>
           </div>
         </div>
