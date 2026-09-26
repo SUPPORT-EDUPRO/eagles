@@ -350,17 +350,18 @@ a {
 .ye-home-hero__copy {
   position: relative;
   z-index: 1;
+  max-width: 38rem;
   padding: 0.4rem 0;
 }
 
 .ye-home-hero__copy h1 {
-  max-width: 34rem;
+  max-width: 38rem;
   margin: 0;
   color: var(--ye-navy-deep);
-  font-size: clamp(3.6rem, 5.25vw, 5.6rem);
+  font-size: clamp(3.6rem, 4.8vw, 5rem);
   font-weight: 900;
-  letter-spacing: -0.07em;
-  line-height: 0.96;
+  letter-spacing: -0.065em;
+  line-height: 1.02;
 }
 
 .ye-home-hero__lede {
@@ -397,7 +398,7 @@ a {
 .ye-home-hero__photo {
   position: relative;
   z-index: 1;
-  min-height: clamp(30rem, 35vw, 37rem);
+  min-height: clamp(30rem, 34vw, 35.5rem);
   margin: 0 calc(-1 * clamp(2.75rem, 4vw, 4.5rem)) 0 0;
   overflow: hidden;
   border-radius: 9rem 6rem 10rem 7rem / 7rem 5rem 8rem 9rem;
@@ -409,16 +410,17 @@ a {
   position: absolute;
   inset: 50% 0 0;
   content: '';
-  background: linear-gradient(transparent, rgba(10, 27, 50, 0.43));
+  background: linear-gradient(transparent 72%, rgba(10, 27, 50, 0.15));
   pointer-events: none;
 }
 
 .ye-home-hero__photo img {
   display: block;
   width: 100%;
-  height: clamp(30rem, 35vw, 37rem);
+  height: clamp(30rem, 34vw, 35.5rem);
   object-fit: cover;
   object-position: center 48%;
+  filter: brightness(1.06) saturate(1.03);
 }
 
 .ye-home-hero__photo figcaption {
@@ -567,13 +569,14 @@ a {
 
 .ye-programme-highlight {
   display: flex;
-  min-height: 22rem;
+  min-height: 20rem;
   flex-direction: column;
   align-items: flex-start;
   padding: clamp(1.35rem, 2.5vw, 2rem);
   border: 1px solid #dde3e8;
-  border-radius: 1.1rem 1.1rem 3.5rem 1.1rem;
+  border-radius: 2rem 2rem 5rem 2rem;
   background: #fff;
+  box-shadow: 0 1rem 2.5rem rgba(20, 43, 80, 0.055);
 }
 
 .ye-programme-highlight--blue {
@@ -669,8 +672,9 @@ a {
   min-height: 14.25rem;
   padding: 1.7rem 1.25rem;
   border: 1px solid #dde3e8;
-  border-radius: 1rem;
+  border-radius: 1.5rem;
   background: #fff;
+  box-shadow: 0 0.75rem 2rem rgba(20, 43, 80, 0.045);
 }
 
 .ye-way-card--01 {
@@ -781,7 +785,7 @@ a {
   position: relative;
   margin: 0;
   overflow: hidden;
-  border-radius: 1rem;
+  border-radius: 1.5rem;
   background: #e5e9e8;
 }
 
@@ -804,7 +808,7 @@ a {
 
 .ye-photo-story__large {
   min-height: 30rem;
-  border-radius: 1rem 1rem 4rem 1rem !important;
+  border-radius: 1.5rem 1.5rem 5rem 1.5rem !important;
 }
 
 .ye-photo-story__small {

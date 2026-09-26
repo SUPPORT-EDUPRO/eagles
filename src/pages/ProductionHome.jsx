@@ -107,11 +107,11 @@ function ProductionHome() {
 
           <figure className="ye-home-hero__photo">
             <img
-              src="/campus/campus-7.jpeg"
-              alt="Children and an adult together in the outdoor play area"
+              src="/campus/campus-7-improved.png"
+              alt="Children and a teacher playing together in the Young Eagles outdoor courtyard"
               fetchPriority="high"
-              width="960"
-              height="1280"
+              width="1086"
+              height="1448"
             />
             <figcaption>Learning through play</figcaption>
           </figure>
