@@ -1,159 +1,131 @@
-import React, { useState } from "react";
-import { Link } from "react-router-dom";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { RiCloseCircleFill } from "react-icons/ri";
-// Using yehc_logo.png for the Young Eagles Home Care Centre branding
-import useRedirect from "../hooks/useRedirect";
-import { motion, AnimatePresence } from "framer-motion";
-import { youngEaglesRegistrationUrl } from "../config/marketing";
+import React, { useEffect, useRef, useState } from 'react';
+import { Link, NavLink, useLocation } from 'react-router-dom';
+import { FaBars, FaTimes, FaWhatsapp } from 'react-icons/fa';
 
-const links = [
-  { to: "/", label: "Home" },
-  { to: "/programs", label: "Programs" },
-  { to: "/about", label: "About" },
-  { to: "/contact", label: "Contact" },
-  { to: "/gallery", label: "Gallery" },
-  {
-    to: youngEaglesRegistrationUrl(),
-    label: "Register for 2027",
-    external: true,
-    highlight: true,
-  },
+import { youngEaglesRegistrationUrl, youngEaglesWhatsAppUrl } from '../config/marketing';
+
+const pageLinks = [
+  { to: '/', label: 'Home', end: true },
+  { to: '/programs', label: 'Programmes' },
+  { to: '/about', label: 'Our Story' },
+  { to: '/gallery', label: 'Gallery' },
+  { to: '/contact', label: 'Contact' },
 ];
 
-const styles = {
-  link: "text-blue-800 font-medium hover:text-white hover:bg-pink-500 px-4 py-2 rounded-full transition-all duration-500",
-  highlight: "bg-pink-500 text-white px-4 py-2 rounded-full font-semibold hover:bg-pink-600 transition",
-};
-
 function Navbar() {
-  const [IsMenuOpen, setIsMenuOpen] = useState(false);
-  const redirect = useRedirect();
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const menuButtonRef = useRef(null);
+  const location = useLocation();
 
-  const toggleMenu = () => setIsMenuOpen(!IsMenuOpen);
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
 
-  const handleRedirect = (path) => {
-    if (IsMenuOpen) toggleMenu();
-    redirect(path, 2000);
-  };
+  useEffect(() => {
+    if (!isMenuOpen) return undefined;
+
+    const closeOnEscape = (event) => {
+      if (event.key === 'Escape') {
+        setIsMenuOpen(false);
+        menuButtonRef.current?.focus();
+      }
+    };
+
+    document.addEventListener('keydown', closeOnEscape);
+    return () => document.removeEventListener('keydown', closeOnEscape);
+  }, [isMenuOpen]);
+
+  const renderLinks = (mobile = false) => pageLinks.map((item) => (
+    <li key={item.to}>
+      <NavLink
+        to={item.to}
+        end={item.end}
+        onClick={mobile ? () => setIsMenuOpen(false) : undefined}
+        className={({ isActive }) => [
+          'ye-nav-link',
+          isActive ? 'is-active' : '',
+        ].filter(Boolean).join(' ')}
+      >
+        {item.label}
+      </NavLink>
+    </li>
+  ));
 
   return (
-    <nav className="fixed w-full top-0 z-50 bg-white shadow-md backdrop-blur-md bg-opacity-80">
-      <div className="max-w-7xl mx-auto px-4 py-3 flex items-center justify-between">
-        {/* Logo */}
-        <Link to="/home" className="flex items-center gap-3 text-lg md:text-xl font-bold text-pink-600">
-          <img src="/app-icons/yehc_logo.png" alt="Young Eagles Home Care Centre Logo" className="h-8 w-8 md:h-10 md:w-10 rounded-full object-cover shadow-sm" />
-          <span className="hidden sm:inline">Young Eagles</span>
-          <span className="sm:hidden">YE</span>
+    <header className="ye-header">
+      <div className="ye-header__inner">
+        <Link className="ye-brand" to="/" aria-label="Young Eagles home">
+          <img src="/app-icons/yehc_logo.png" alt="" width="48" height="48" />
+          <span>Young Eagles</span>
         </Link>
 
-        {/* Desktop Menu */}
-        <ul className="hidden md:flex items-center gap-4 ">
-          {links.map((link, i) =>
-            link.external ? (
-              <li key={i}>
-                <a
-                  href={link.to}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={link.highlight ? styles.highlight : styles.link}
-                >
-                  {link.label}
-                </a>
-              </li>
-            ) : link.isRedirect ? (
-              <li key={i} onClick={() => handleRedirect(link.to)} className="cursor-pointer">
-                <span className={styles.link}>{link.label}</span>
-              </li>
-            ) : (
-              <li key={i}>
-                <Link
-                  to={link.to}
-                  className={link.highlight ? styles.highlight : styles.link}
-                >
-                  {link.label}
-                </Link>
-              </li>
-            )
-          )}
-        </ul>
+        <nav className="ye-desktop-nav" aria-label="Main navigation">
+          <ul>{renderLinks()}</ul>
+        </nav>
 
-        {/* Mobile Toggle */}
+        <div className="ye-header__actions">
+          <a
+            className="ye-btn ye-btn-header-chat"
+            href={youngEaglesWhatsAppUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <FaWhatsapp aria-hidden="true" />
+            Chat on WhatsApp
+          </a>
+          <a
+            className="ye-btn ye-btn-primary ye-header__enquire"
+            href={youngEaglesRegistrationUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Enquire for 2027
+          </a>
+        </div>
+
         <button
-          className="relative z-[60] md:hidden bg-white p-2 rounded-full shadow-md cursor-pointer flex items-center justify-center w-10 h-10"
-          onClick={toggleMenu}
-          aria-label="Toggle menu"
+          ref={menuButtonRef}
+          className="ye-menu-toggle"
+          type="button"
+          aria-expanded={isMenuOpen}
+          aria-controls="ye-mobile-navigation"
+          aria-label={isMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          onClick={() => setIsMenuOpen((open) => !open)}
         >
-          {IsMenuOpen ? (
-            <RiCloseCircleFill className="text-pink-600 text-xl" />
-          ) : (
-            <GiHamburgerMenu className="text-pink-600 text-xl" />
-          )}
+          {isMenuOpen ? <FaTimes aria-hidden="true" /> : <FaBars aria-hidden="true" />}
         </button>
       </div>
 
-      {/* Mobile Menu */}
-      <AnimatePresence>
-        {IsMenuOpen && (
-          <>
-            {/* Background overlay */}
-            <motion.div
-              className="fixed inset-0 bg-black bg-opacity-50 z-[55]"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              onClick={toggleMenu} // Close menu when clicking outside
-            />
-
-            {/* Slide-in Sidebar */}
-            <motion.div
-              className="fixed top-0 left-0 w-2/3 max-w-sm h-screen bg-white z-[60] shadow-lg"
-              initial={{ x: "-100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "-100%" }}
-              transition={{ type: "tween", duration: 0.3 }}
-              onClick={(e) => e.stopPropagation()} // Prevent click propagation to the overlay
-            >
-              <ul className="flex flex-col gap-y-6 p-6 mt-10 text-center">
-                {links.map((link, i) => (
-                  <motion.li
-                    key={i}
-                    initial={{ x: 50, opacity: 0 }}
-                    animate={{ x: 0, opacity: 1 }}
-                    transition={{ delay: 0.1 * (i + 1) }}
-                    className="cursor-pointer w-full"
-                    onClick={() =>
-                      link.external
-                        ? toggleMenu()
-                        : link.isRedirect
-                        ? handleRedirect(link.to)
-                        : toggleMenu()
-                    }
-                  >
-                    {link.external ? (
-                      <a
-                        href={link.to}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className={link.highlight ? styles.highlight : styles.link}
-                      >
-                        {link.label}
-                      </a>
-                    ) : link.isRedirect ? (
-                      <span className={styles.link}>{link.label}</span>
-                    ) : (
-                      <Link to={link.to} className={link.highlight ? styles.highlight : styles.link}>
-                        {link.label}
-                      </Link>
-                    )}
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
-          </>
-        )}
-      </AnimatePresence>
-    </nav>
+      <nav
+        id="ye-mobile-navigation"
+        className="ye-mobile-nav"
+        aria-label="Mobile navigation"
+        hidden={!isMenuOpen}
+      >
+        <ul>{renderLinks(true)}</ul>
+        <div className="ye-mobile-nav__actions">
+          <a
+            className="ye-btn ye-btn-header-chat"
+            href={youngEaglesWhatsAppUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            <FaWhatsapp aria-hidden="true" />
+            Chat on WhatsApp
+          </a>
+          <a
+            className="ye-btn ye-btn-primary"
+            href={youngEaglesRegistrationUrl()}
+            target="_blank"
+            rel="noopener noreferrer"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            Enquire for 2027
+          </a>
+        </div>
+      </nav>
+    </header>
   );
 }
 

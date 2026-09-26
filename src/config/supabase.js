@@ -9,16 +9,18 @@ if (!supabaseAnonKey) {
   console.warn('⚠️ Supabase anon key not found. Please add VITE_SUPABASE_ANON_KEY to your .env file');
 }
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey, {
-  auth: {
-    autoRefreshToken: true,
-    persistSession: true,
-    detectSessionInUrl: true
-  },
-  db: {
-    schema: 'public'
-  }
-});
+export const supabase = supabaseAnonKey
+  ? createClient(supabaseUrl, supabaseAnonKey, {
+      auth: {
+        autoRefreshToken: true,
+        persistSession: true,
+        detectSessionInUrl: true,
+      },
+      db: {
+        schema: 'public',
+      },
+    })
+  : null;
 
 // Helper function to handle Supabase errors
 export const handleSupabaseError = (error) => {

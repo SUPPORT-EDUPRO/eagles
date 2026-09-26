@@ -12,6 +12,14 @@ export const WHATSAPP_E164 = '27815236000';
 
 export const WHATSAPP_HREF = `https://wa.me/${WHATSAPP_E164}`;
 
+export const WHATSAPP_ENQUIRY_MESSAGE =
+  'Hello Young Eagles, I would like to enquire about enrolment for 2027.';
+
+/** Keeps every public WhatsApp action on the established Young Eagles number. */
+export function youngEaglesWhatsAppUrl(message = WHATSAPP_ENQUIRY_MESSAGE) {
+  return `${WHATSAPP_HREF}?text=${encodeURIComponent(message)}`;
+}
+
 export const SOCIAL_PROFILES = [
   {
     id: 'facebook',

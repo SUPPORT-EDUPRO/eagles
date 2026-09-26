@@ -41,8 +41,6 @@ import NotificationManager from './components/NotificationManager';
 import AuthTest from './auth/AuthTest';
 import MessagingCenter from './components/Messaging/MessagingCenter';
 import WhatsAppFloat from './components/WhatsAppFloat';
-import FloatingElements from './components/FloatingElements';
-import BubbleAnimation from './components/BubbleAnimation';
 import './App.css';
 
 
@@ -135,10 +133,6 @@ function App() {
             <Route path="*" element={<div className="p-4 text-center">404 Not Found</div>} />
             <Route path="/unauthorized" element={<div className="p-4 text-center">You are not authorized to view this page.</div>} />
         </Routes>
-        
-        {/* Global Background Animations */}
-        <FloatingElements />
-        <BubbleAnimation />
         
         {/* Notification Components */}
         <NotificationPermission />

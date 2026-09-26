@@ -1,30 +1,25 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { FaCalendarAlt } from 'react-icons/fa';
 
-function MyRegisterButton({ className = "", variant = "primary" }) {
-  const variants = {
-    primary: "bg-gradient-to-r from-pink-600 to-purple-600 text-white hover:from-pink-700 hover:to-purple-700",
-    secondary: "bg-white text-purple-600 border-2 border-purple-600 hover:bg-purple-50",
-    outline: "border-2 border-white text-white hover:bg-white hover:text-purple-600"
-  };
+import { youngEaglesRegistrationUrl } from '../config/marketing';
 
-  const handleRegisterClick = () => {
-    // Route to EduSitePro centralized registration
-    const edusiteproUrl = import.meta.env.VITE_EDUSITEPRO_URL || 'http://localhost:3002';
-    window.location.href = `${edusiteproUrl}/registration/young-eagles`;
+function MyRegisterButton({ className = '', variant = 'primary' }) {
+  const variants = {
+    primary: 'ye-btn ye-btn-primary',
+    secondary: 'ye-btn ye-btn-secondary text-[color:var(--ye-navy)]',
+    outline: 'ye-btn ye-btn-ghost-on-dark',
   };
 
   return (
-    <motion.button
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      onClick={handleRegisterClick}
-      className={`px-6 py-3 rounded-xl font-semibold transition-all duration-300 flex items-center gap-2 shadow-lg hover:shadow-xl ${variants[variant]} ${className}`}
+    <a
+      href={youngEaglesRegistrationUrl()}
+      target="_blank"
+      rel="noopener noreferrer"
+      className={`${variants[variant] || variants.primary} gap-2 ${className}`}
     >
-      <FaCalendarAlt />
+      <FaCalendarAlt aria-hidden="true" />
       Register for 2027
-    </motion.button>
+    </a>
   );
 }
 

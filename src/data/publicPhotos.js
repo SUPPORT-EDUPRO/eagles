@@ -1,0 +1,148 @@
+export const homeStoryPhotos = {
+  funDay: {
+    src: '/young-eagles-life/fun-day-stage.webp',
+    alt: 'Children gathered at a Young Eagles Fun Day activity',
+    caption: 'A shared moment',
+  },
+  celebration: {
+    src: '/young-eagles-life/birthday-table.webp',
+    alt: 'Children sitting together around a birthday celebration table',
+    caption: 'Time together',
+  },
+  heritage: {
+    src: '/young-eagles-life/heritage-day-sharing.webp',
+    alt: 'Children and adults gathered together at Young Eagles on Heritage Day',
+    caption: 'Sharing the day',
+  },
+};
+
+export const galleryCategories = [
+  { id: 'all', label: 'All photos' },
+  { id: 'everyday', label: 'Everyday life' },
+  { id: 'fun-day', label: 'Fun Day' },
+  { id: 'heritage-day', label: 'Heritage Day' },
+  { id: 'celebrations', label: 'Celebrations' },
+  { id: 'community', label: 'Community' },
+];
+
+export const galleryPhotos = [
+  {
+    id: 'outside-together',
+    src: '/campus/campus-7.jpeg',
+    alt: 'Children and an adult together in the outdoor play area',
+    caption: 'Outside together',
+    category: 'everyday',
+  },
+  {
+    id: 'group-activity',
+    src: '/campus/campus-10.jpeg',
+    alt: 'Children and adults gathered for a group activity',
+    caption: 'Learning together',
+    category: 'everyday',
+  },
+  {
+    id: 'room-to-create',
+    src: '/campus/campus-9.jpeg',
+    alt: 'Small tables and colourful materials in a learning space',
+    caption: 'Room to create',
+    category: 'everyday',
+  },
+  {
+    id: 'walking-together',
+    src: '/campus/campus-8.jpeg',
+    alt: 'Children walking together along a campus corridor',
+    caption: 'Walking together',
+    category: 'everyday',
+  },
+  {
+    id: 'school-corridor',
+    src: '/campus/campus-1.jpeg',
+    alt: 'Checkered corridor inside Young Eagles',
+    caption: 'Around the campus',
+    category: 'everyday',
+  },
+  {
+    id: 'shared-space',
+    src: '/campus/campus-6.jpeg',
+    alt: 'Shared space along a Young Eagles hallway',
+    caption: 'A shared space',
+    category: 'everyday',
+  },
+  {
+    id: 'fun-day-stage',
+    src: '/young-eagles-life/fun-day-stage.webp',
+    alt: 'Children gathered at a Young Eagles Fun Day activity',
+    caption: 'Fun Day together',
+    category: 'fun-day',
+  },
+  {
+    id: 'fun-day-circle',
+    src: '/young-eagles-life/fun-day-circle.webp',
+    alt: 'Children sitting in a circle during a Young Eagles Fun Day activity',
+    caption: 'Making a circle',
+    category: 'fun-day',
+  },
+  {
+    id: 'fun-day-friends',
+    src: '/young-eagles-life/fun-day-together.webp',
+    alt: 'Children sitting together at a Young Eagles Fun Day event',
+    caption: 'Friends together',
+    category: 'fun-day',
+  },
+  {
+    id: 'fun-day-dress-up',
+    src: '/young-eagles-life/fun-day-dress-up.webp',
+    alt: 'A member of staff dressed up for Fun Day with children nearby',
+    caption: 'A day to play',
+    category: 'fun-day',
+  },
+  {
+    id: 'heritage-toddlers',
+    src: '/young-eagles-life/heritage-day-toddlers.webp',
+    alt: 'Two young children standing together at Young Eagles on Heritage Day',
+    caption: 'Heritage Day',
+    category: 'heritage-day',
+  },
+  {
+    id: 'heritage-sharing',
+    src: '/young-eagles-life/heritage-day-sharing.webp',
+    alt: 'Children and adults gathered together at Young Eagles on Heritage Day',
+    caption: 'Sharing the day',
+    category: 'heritage-day',
+  },
+  {
+    id: 'heritage-child',
+    src: '/young-eagles-life/heritage-day-children.webp',
+    alt: 'A young child at Young Eagles on Heritage Day',
+    caption: 'A little moment',
+    category: 'heritage-day',
+  },
+  {
+    id: 'birthday-table',
+    src: '/young-eagles-life/birthday-table.webp',
+    alt: 'Children sitting together around a birthday celebration table',
+    caption: 'A birthday table',
+    category: 'celebrations',
+  },
+  {
+    id: 'birthday-children',
+    src: '/young-eagles-life/birthday-children.webp',
+    alt: 'Children gathered for a birthday celebration at Young Eagles',
+    caption: 'Celebrating together',
+    category: 'celebrations',
+  },
+  {
+    id: 'birthday-smile',
+    src: '/young-eagles-life/birthday-smile.webp',
+    alt: 'A child at a Young Eagles birthday celebration',
+    caption: 'A special day',
+    category: 'celebrations',
+  },
+  {
+    id: 'community-gathering',
+    src: '/young-eagles-life/community-gathering.webp',
+    alt: 'Children gathered together outside at Young Eagles',
+    caption: 'Together in our community',
+    category: 'community',
+  },
+];
